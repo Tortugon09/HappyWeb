@@ -11,7 +11,7 @@ function App() {
     <div className="App">
         <BrowserRouter>
             <Routes>
-                <Route path={"/"} element={<Home></Home>}></Route>
+                <Route path={"/HappyWeb"} element={<Home></Home>}></Route>
                 <Route path={"/LogIn"} element={<FormLogIn></FormLogIn>}></Route>
                 <Route path={"/Register"} element={<FormRegister></FormRegister>}></Route>
                 <Route path={"/Pasteles"} element={<Cakes></Cakes>}></Route>
