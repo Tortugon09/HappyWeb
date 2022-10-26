@@ -26,7 +26,7 @@ export function Navbar() {
                             </div>
                         </div>
                         <Link to={"/ShoppingCar"}><FaShoppingCart/></Link>
-                        <Link to={"/Login"} >Login </Link>
+                        <h3><Link to={"/Login"} >Login </Link></h3>
 
                     </div>
                 </div>
