@@ -109,7 +109,6 @@ Error generating stack: `+o.message+`
       width: 30%;
       gap: 3%;
       justify-content: center;
-      h3{
       a{
         color: black;
         list-style: none;
@@ -118,7 +117,6 @@ Error generating stack: `+o.message+`
         font-weight: 400;
         font-size: 1.2rem;
         text-decoration: none;
-      }
       }
       svg{
         color: black;
