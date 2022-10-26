@@ -32,7 +32,7 @@ export function Navbar() {
                 </div>
 
             </NavContainer>
-            <EffectM></EffectM>
+            <EffectM className="menu-back"></EffectM>
 
 
         </>

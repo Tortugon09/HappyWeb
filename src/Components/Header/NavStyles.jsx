@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Background from "../../assets/Img/Header/backgroundHeader.svg"
 
 export const NavContainer = styled.nav`
   box-sizing: border-box;
@@ -119,7 +120,6 @@ export const NavContainer = styled.nav`
 `
 
 export const EffectM = styled.div`
-  background: url("../../../src/assets/Img/Header/backgroundHeader.svg");
   background-size: contain;
   background-repeat: repeat-x;
   position: absolute;
