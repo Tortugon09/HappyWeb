@@ -13,7 +13,7 @@ export function Navbar() {
                     <div className="box1">
                         <img src={IconNav}/>
                         <div className="menu">
-                            <li><Link to={"/"}>Home</Link></li>
+                            <li><Link to={"/HappyWeb"}>Home</Link></li>
                             <li><Link to={"/Pasteles"}>Pasteles</Link></li>
                             <li><Link to={""}>ContactUs</Link> </li>
                         </div>
@@ -25,8 +25,8 @@ export function Navbar() {
                                 <label htmlFor="search-header"><FaSistrix/></label>
                             </div>
                         </div>
-                        <FaShoppingCart/>
-                        <h3><Link to={"/Login"}>Login</Link> </h3>
+                        <Link to={"/ShoppingCar"}><FaShoppingCart/></Link>
+                        <Link to={"/Login"} >Login </Link>
 
                     </div>
                 </div>

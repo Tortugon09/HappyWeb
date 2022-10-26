@@ -4,7 +4,7 @@ import {Home} from "./Components/Layouts/Home";
 import {FormLogIn} from "./Components/Layouts/FormLogIn";
 import {FormRegister} from "./Components/Layouts/FormRegister";
 import {Cakes} from "./Components/Layouts/Cakes";
-
+import {ShoppingCart} from "./Components/Layouts/ShoppingCart.jsx";
 function App() {
 
   return (
@@ -15,6 +15,7 @@ function App() {
                 <Route path={"/LogIn"} element={<FormLogIn></FormLogIn>}></Route>
                 <Route path={"/Register"} element={<FormRegister></FormRegister>}></Route>
                 <Route path={"/Pasteles"} element={<Cakes></Cakes>}></Route>
+                <Route path={"/ShoppingCar"} element={<ShoppingCart></ShoppingCart>}></Route>
             </Routes>
         </BrowserRouter>
     </div>
