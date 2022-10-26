@@ -10,7 +10,7 @@ export function BodyRegister() {
     return (
         <>
             <FormBox>
-                <div className="box-img"></div>
+                <div className="box-img-form"></div>
                 <FormContainer>
                     <div className="form-box">
                         <div className="form-title"><h2>Registro</h2></div>

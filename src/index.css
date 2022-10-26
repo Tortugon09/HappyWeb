@@ -1,7 +1,9 @@
 .menu-back{
   background: url("../src/assets/Img/Header/backgroundHeader.svg");
 }
-
+.box-img-form{
+  background: url("../src/assets/Img/Body/Form/FormImg.jpg");
+}
 body {
   margin: 0;
   min-width: 320px;

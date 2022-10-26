@@ -4,9 +4,8 @@ import styled from "styled-components";
 
 export const FormBox = styled.div`
   display: flex;
-  .box-img{
+  .box-img-form{
     width: 60%;
-    background: url("../../../../src/assets/Img/Body/Form/FormImg.jpg");
     background-size: cover;
     clip-path: polygon(85% 100%, 100% 0%, 0% 0%, 0% 100%);
     img{
