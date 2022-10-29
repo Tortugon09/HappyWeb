@@ -1,32 +1,53 @@
+import Logo from "../../src/assets/Img/ImgCake.png"
 const Data ={
     products: [
-        {id:1, img:"src/assets/Img/ImgCake.png", about:"Lorem Ipsum is simply " +
+        {
+            id:1,
+            img:Logo,
+            about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
                 "dummy text ever since the 1500s, when an unknown" +
                 " printer took a galley of type and scrambled " +
-                "it to make a type specimen book", name:"Pastel de chocolate", price: "100"},
-        {id:2, img:"src/assets/Img/ImgCake.png", about:"Lorem Ipsum is simply " +
+                "it to make a type specimen book",
+            name:"Pastel de chocolate",
+            price: "100"},
+        {
+            id:2,
+            img:Logo,
+            about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
                 "dummy text ever since the 1500s, when an unknown" +
                 " printer took a galley of type and scrambled " +
-                "it to make a type specimen book", name:"Pastel 2", price: "100"},
-        {id:3, img:"src/assets/Img/ImgCake.png", about:"Lorem Ipsum is simply " +
+                "it to make a type specimen book",
+            name:"Pastel 2",
+            price: "100"},
+        {
+            id:3,
+            img:Logo,
+            about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
                 "dummy text ever since the 1500s, when an unknown" +
                 " printer took a galley of type and scrambled " +
-                "it to make a type specimen book", name:"Pastel 3", price: "300"},
-        {id:4, img:"src/assets/Img/ImgCake.png", about:"Lorem Ipsum is simply " +
+                "it to make a type specimen book",
+            name:"Pastel 3",
+            price: "300"},
+        {
+            id:4,
+            img:Logo,
+            about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
                 "dummy text ever since the 1500s, when an unknown" +
                 " printer took a galley of type and scrambled " +
-                "it to make a type specimen book", name:"Pastel 4", price: "200"},
+                "it to make a type specimen book",
+            name:"Pastel 4",
+            price: "200"},
         {
             id:5,
-            img:"src/assets/Img/ImgCake.png",
+            img:Logo,
             about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
@@ -38,7 +59,7 @@ const Data ={
         },
         {
             id:6,
-            img:"src/assets/Img/ImgCake.png",
+            img:Logo,
             about:"Lorem Ipsum is simply " +
                 "dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard " +
