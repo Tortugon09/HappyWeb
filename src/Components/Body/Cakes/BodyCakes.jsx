@@ -4,6 +4,7 @@ import {BodyCakeStyled, CakeBodyContainer, NavCakes} from "./CakesStyles";
 import Img1 from "../../../assets/Img/Body/Cakes/Img1.svg"
 import Img2 from "../../../assets/Img/Body/Cakes/Img2.png"
 import Img3 from "../../../assets/Img/Body/Cakes/Img3.png"
+import Data from "../../../Data/Data.jsx";
 
 export function BodyCakes() {
     return (
@@ -27,29 +28,7 @@ export function BodyCakes() {
                     </NavCakes>
                 </div>
                 <CakeBodyContainer>
-                    <CakeBox nameCake={"Nombre del Pastel"} imgs={ImgTry} texts={"Lorem Ipsum is simply " +
-                        "dummy text of " +
-                        "the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy " +
-                        "text " +
-                        "ever since the 1500s, when an unknown printer took a galle"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawddwad awddwadawddwadawd" +
-                        "dwadawddwadaw ddw adawddwada wddwad awdd wadaw d" +
-                        "dwad awddw da wddwa dawdd wada wddwadawdd wa dawdwddwadawdd wa dawdwddwadawdd wa dawd" +
-                        "wddwadawdd wa dawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
-                    <CakeBox nameCake={"dwdwdw"} imgs={ImgTry} texts={"dwadawd"} price={"dwdw"}>
-                    </CakeBox>
+                    {Data.products.map((product) => <CakeBox key={product.id}   data={product}/>) }
                 </CakeBodyContainer>
             </BodyCakeStyled>
         </>

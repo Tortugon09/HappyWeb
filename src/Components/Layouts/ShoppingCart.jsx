@@ -1,9 +1,9 @@
 import {ShoppingCarBody} from "../Body/Shopping/ShoppingCarBody";
 
-export function ShoppingCart () {
+export function ShoppingCart ({cartItems}) {
  return(
      <>
-         <ShoppingCarBody></ShoppingCarBody>
+         <ShoppingCarBody cartItems={cartItems} ></ShoppingCarBody>
      </>
      )
 

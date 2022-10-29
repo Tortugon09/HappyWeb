@@ -19,7 +19,7 @@ export function BodyLogin() {
                             </InputBox1>
                             <InputBox1 label={label2} type="password" id="password" htmlFor="password"></InputBox1>
                             <input  className="submit" type="submit" value="LogIn" id="btn-form-LogIn"  />
-                            <div><Link to={"/Register"}>¿No tienes una cuenta? Registrate Aqui</Link></div>
+                            <div><Link to={"/HappyWeb/Register"}>¿No tienes una cuenta? Registrate Aqui</Link></div>
                         </form></div>
                     </div>
                 </FormContainer>

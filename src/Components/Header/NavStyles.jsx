@@ -74,6 +74,21 @@ export const NavContainer = styled.nav`
         text-decoration: none;
       }
       }
+      a{
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+        p {
+          color: #FFC2D4;
+          list-style: none;
+          font-family: 'Oswald';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 2.2rem;
+          text-decoration: none;
+
+        }
+      }
       svg{
         color: black;
         font-style: normal;

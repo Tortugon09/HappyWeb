@@ -60,6 +60,22 @@ export const CakeContainer = styled.div`
       -webkit-text-stroke: 2px #000;
     }
   }
+  button{
+    background: #DD722E;
+    border: 1px solid #fff;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 53px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 1%;
+    transition: all 0.3s ease;
+    &:hover{
+      background: black;
+    }
+  }
 `
 
 export const CakeBodyContainer = styled.section`

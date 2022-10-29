@@ -174,6 +174,7 @@ export const AboutUsContainer = styled.div`
     gap: 3rem;
     min-height: 600px;
     padding-top: 2%;
+    padding-bottom: 10%;
     h1{
       font-family: 'Bebas Neue';
       font-style: normal;
@@ -190,7 +191,10 @@ export const AboutUsContainer = styled.div`
       font-size: 1.25rem;
       text-align: center;
       color: #000000;
-      max-width: 550px;
+      max-width: 850px;
+      span{
+        font-weight: 700;
+      }
     }
     .img-collague{
       display: flex;

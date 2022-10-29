@@ -44,8 +44,9 @@ export function BodyHome() {
             <AboutUsContainer>
                 <div className="box-about">
                     <h1>Sobre Nosotros</h1>
-                    <div className="about-text">Somos una pasteleria nueva llamada <span>HAPPY</span>con mucha calidad y ganas de hacer
-                         pasteles de mucha calidad y poder venderlos en todo el mundo</div>
+                    <div className="about-text">Esta microempresa nace con la finalidad de brindar a nuestros clientes y amigos un producto de calidad, pero sobre todo que sea accesible para todas las familias.<br/><br/>
+                        Dentro de nuestra entidad contamos con un sin número de establecimientos que ofrecen los mismos productos, pero a un costo excesivo, es por ello por lo que nuestra política es simple <span>“Sabor, Atención y Buen Servicio a Bajo Costo”.</span>
+                    </div>
                     <div className='img-collague'>
                         <img src={about1}/>
                         <img src={about2}/>
