@@ -25,6 +25,7 @@ export const CakeContainer = styled.div`
     line-height: 32px;
     color: #DD722E;
     -webkit-text-stroke: 2px #FFFFFF;
+    
 
   }
   
@@ -84,6 +85,7 @@ export const CakeBodyContainer = styled.section`
   column-gap: 2%;
   justify-content: center;
   align-items: center;
+  width: 80%;
 `
 
 export const NavCakes = styled.nav`

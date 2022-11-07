@@ -1,6 +1,5 @@
 import {EffectM, NavContainer} from "./NavStyles";
 import IconNav from "../../assets/Img/Header/IconHappy.svg"
-import SHPCart from "../../assets/Img/Header/SHPCart.svg"
 import {FaSistrix,FaShoppingCart} from "react-icons/fa"
 import {Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
@@ -25,7 +24,7 @@ export function Navbar() {
                         <div className="menu">
                             <li><Link to={"/HappyWeb"}>Home</Link></li>
                             <li><Link to={"/HappyWeb/Pasteles"}>Pasteles</Link></li>
-                            <li><Link to={""}>ContactUs</Link> </li>
+                            <li><Link to={"/HappyWeb/ControlPanel"}>ContactUs</Link> </li>
                         </div>
                     </div>
                     <div className="box2">

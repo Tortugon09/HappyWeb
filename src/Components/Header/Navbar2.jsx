@@ -24,7 +24,7 @@ export function Navbar2() {
                         <div className="menu">
                             <li><Link to={"/HappyWeb"}>Home</Link></li>
                             <li><Link to={"/HappyWeb/Pasteles"}>Pasteles</Link></li>
-                            <li><Link to={""}>ContactUs</Link> </li>
+                            <li><Link to={"/HappyWeb/ControlPanel"}>ContactUs</Link> </li>
                         </div>
                     </div>
                     <div className="box2">

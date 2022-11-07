@@ -4,6 +4,10 @@
 .box-img-form{
   background: url("../src/assets/Img/Body/Form/FormImg.jpg");
 }
+
+.box-img-form-controlpanel{
+  background: url("../src/assets/Img/Body/Form/FormImg2.jpg");
+}
 body {
   margin: 0;
   min-width: 320px;

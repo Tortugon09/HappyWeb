@@ -1,6 +1,7 @@
 import {AddBox, Buttom} from "./ShoppingStyles";
 import {useContext} from "react";
 import {CartContext} from "../../../Context/CartContext.jsx";
+import Img from "../../../assets/Img/ImgCake.png"
 
 export function AddCar(data) {
     let {id,img,name,about,price} = data;
@@ -11,7 +12,7 @@ export function AddCar(data) {
             <AddBox>
                 <div className="cake-data">
                     <div className="img-add">
-                        <img src={`${data.data.img}`}/>
+                        <img src={Img}/>
                     </div>
                     <div className="dates-add">
                         <h3 className="name">{data.data.name}</h3>

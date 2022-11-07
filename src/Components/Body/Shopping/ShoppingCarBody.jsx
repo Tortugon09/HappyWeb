@@ -7,6 +7,7 @@ import {CartContext} from "../../../Context/CartContext.jsx";
 
 export function ShoppingCarBody() {
     const {cartItems} = useContext(CartContext)
+
     console.log(cartItems)
     return (
         <>

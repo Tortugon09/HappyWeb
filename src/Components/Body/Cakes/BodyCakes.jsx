@@ -1,12 +1,13 @@
 import {CakeBox} from "./CakeBox";
-import ImgTry from "../../../assets/Img/ImgCake.png"
 import {BodyCakeStyled, CakeBodyContainer, NavCakes} from "./CakesStyles";
 import Img1 from "../../../assets/Img/Body/Cakes/Img1.svg"
 import Img2 from "../../../assets/Img/Body/Cakes/Img2.png"
 import Img3 from "../../../assets/Img/Body/Cakes/Img3.png"
-import Data from "../../../Data/Data.jsx";
+import {useContext} from "react";
+import {CartContext} from "../../../Context/CartContext.jsx";
 
 export function BodyCakes() {
+    const {products } = useContext(CartContext);
     return (
         <>
             <BodyCakeStyled>
@@ -28,7 +29,7 @@ export function BodyCakes() {
                     </NavCakes>
                 </div>
                 <CakeBodyContainer>
-                    {Data.products.map((product) => <CakeBox key={product.id}   data={product}/>) }
+                    {products.map((product) => <CakeBox key={product.id}   data={product}/>) }
                 </CakeBodyContainer>
             </BodyCakeStyled>
         </>
