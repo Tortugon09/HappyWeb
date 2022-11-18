@@ -20,6 +20,8 @@ export const CartProvider = ({ children }) => {
         await axios
             .get("http://localhost:8080/product")
             .then(({ data }) => setProducts(data.data));
+
+
     };
     const getProductsCart = async () => {
         return await axios

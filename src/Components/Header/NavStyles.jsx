@@ -12,7 +12,9 @@ export const NavContainer = styled.nav`
   left: 0px;
   background: white;
   z-index: 3;
-  
+  @media(max-width: 960px){
+    height: 80px;
+  }
   .box-nav{
     box-sizing: border-box;
     display: flex;
@@ -26,15 +28,58 @@ export const NavContainer = styled.nav`
       display: flex;
       width: 40%;
       gap: 2rem;
+      @media(max-width: 960px){
+        width: 100%;
+      }
       img{
         width: 5rem;
         padding: 2em;
+        @media(max-width: 960px){
+          display: none;
+        }
       }
       .menu{
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        @media(max-width: 960px){
+          justify-content: center;
+        }
+        .mobile-menu{
+          display: none;
+          top: 10px;
+          li{
+            a{
+              display: flex;
+              color: #FFC2D4;
+              p{
+                margin: 0px;
+                color: black;
+                list-style: none;
+                font-family: 'Oswald';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 2rem;
+                text-decoration: none;
+              }
+            }
+          }
+          @media(max-width: 960px){
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            max-width: 600px;
+          }
+        }
+        .menu-desktop{
+          display: flex;
+          @media(max-width: 960px){
+            display: none;
+          }
+        }
+        
+        
         li{
           list-style: none;
           a{
@@ -63,6 +108,9 @@ export const NavContainer = styled.nav`
       width: 30%;
       gap: 3%;
       justify-content: center;
+      @media(max-width: 960px){
+        display: none;
+      }
       h3{
       a{
         color: black;
@@ -127,6 +175,9 @@ export const NavContainer = styled.nav`
         &:hover label svg{
           transform: rotate(360deg);
         }
+        @media(max-width: 960px){
+          display: none;
+        }
       }
 
     }
@@ -146,6 +197,9 @@ export const EffectM = styled.div`
   }
   @media(max-width: 1326px){
     top: 60px;
+  }
+  @media(max-width: 960px){
+    top: 80px;
   }
 `
 

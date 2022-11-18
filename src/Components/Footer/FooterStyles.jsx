@@ -16,6 +16,9 @@ export const FooterContainer = styled.footer`
         font-weight: 400;
         font-size: 1rem;
         color: rgba(255, 255, 255, 0.6);
+        @media(max-width: 400px) {
+          font-size: 0.7rem;
+        }
       }
     }
     h3{
@@ -24,6 +27,9 @@ export const FooterContainer = styled.footer`
       font-weight: 400;
       font-size: 1rem;
       color: #FFFFFF;
+      @media(max-width: 400px) {
+        font-size: 0.7rem;
+      }
     }
     .box1{
       max-width: 261px;
@@ -35,6 +41,7 @@ export const FooterContainer = styled.footer`
         line-height: 30px;
         color: #DD722E;
         margin: 1rem 1rem 1rem 0rem;
+        -webkit-text-stroke: 1px #FFFFFF;
       }
       .text{
         font-family: 'Oswald';
@@ -42,6 +49,9 @@ export const FooterContainer = styled.footer`
         font-weight: 400;
         font-size: 1rem;
         color: rgba(255, 255, 255, 0.6);
+        @media(max-width: 400px) {
+          font-size: 0.7rem;
+        }
       }
       .derechos{
         font-family: 'Oswald';
@@ -51,6 +61,9 @@ export const FooterContainer = styled.footer`
         line-height: 12px;
         color: rgba(255, 255, 255, 0.6);
         margin: 1rem 1rem 1rem 0rem;
+        @media(max-width: 400px) {
+          font-size: 0.6rem;
+        }
       }
     }
     .box2{

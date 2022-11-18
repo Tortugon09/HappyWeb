@@ -10,6 +10,9 @@ export const BodyContainer = styled.div`
     max-width: 2000px;
     max-height: 1200px;
   }
+  @media(max-width: 960px){
+    padding-top: 80%;
+  }
   .box-home{
     box-sizing: border-box;
     width: 100%;
@@ -20,6 +23,28 @@ export const BodyContainer = styled.div`
     @media(min-width: 1850px){
       max-width: 2000px;
       max-height: 1200px;
+    }
+    @media(max-width: 1300px) {
+      .box1-img {
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    @media(max-width: 960px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 0%;
+      .box1-img {
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
     }
     .box1-img{
       display: flex;
@@ -35,6 +60,12 @@ export const BodyContainer = styled.div`
       flex-direction: column;
       width: 30%;
       padding-top: 4%;
+      box-sizing: border-box;
+      @media(max-width: 960px) {
+        width: 100%;
+        padding-bottom: 60%;
+      }
+      
       h1{
         font-family: 'VAL';
         font-style: normal;
@@ -46,6 +77,10 @@ export const BodyContainer = styled.div`
         @media(min-width: 1850px){
           font-size: 9rem;
         }
+        @media(max-width: 400px) {
+          font-size: 5rem;
+        }
+
       }
       h2{
         margin: 0px;
@@ -78,7 +113,7 @@ export const BodyContainer = styled.div`
           padding: 0.1em 0.1em 0.1em 0.1em;
         }
       &:hover{
-        font-size: 4.5rem;
+        font-size: 4.2rem;
       }
       }
     }
@@ -95,6 +130,10 @@ export const HomeCakeContainer = styled.div`
     justify-items: center;
     align-items: center;
     grid-template-rows: 1fr;
+    @media(max-width: 960px) {
+      display: flex;
+      flex-direction: column;
+    }
     .boxs{
       box-sizing: border-box;
       padding: 8%;
@@ -111,6 +150,15 @@ export const HomeCakeContainer = styled.div`
         }
         
       }
+      @media(max-width: 960px) {
+        display: flex;
+        flex-direction: column;
+        max-height: 200px;
+        justify-content: center;
+        img{
+          display: none;
+        }
+      }
     }
     .cake1{
       background: #E56A77;
@@ -124,6 +172,14 @@ export const HomeCakeContainer = styled.div`
       -o-transform: skew(-20deg);
       transform: skew(-20deg);
       width: 135%;
+      @media(max-width: 960px) {
+        width: 100%;
+        -webkit-transform: skew(0deg);
+        -moz-transform: skew(0deg);
+        -ms-transform: skew(0deg);
+        -o-transform: skew(0deg);
+        transform: skew(0deg);
+      }
       
       img{
         width: 33%;
@@ -132,6 +188,13 @@ export const HomeCakeContainer = styled.div`
         -ms-transform: skew(20deg);
         -o-transform: skew(20deg);
         transform: skew(20deg);
+        @media(max-width: 960px) {
+          -webkit-transform: skew(0deg);
+          -moz-transform: skew(0deg);
+          -ms-transform: skew(0deg);
+          -o-transform: skew(0deg);
+          transform: skew(0deg);
+        }
       }
       h3{
         margin-left: 12%;
@@ -141,6 +204,14 @@ export const HomeCakeContainer = styled.div`
         -o-transform: skew(20deg);
         transform: skew(20deg);
         margin-top: 7%;
+        @media(max-width: 960px) {
+          margin-left: 0%;
+          -webkit-transform: skew(0deg);
+          -moz-transform: skew(0deg);
+          -ms-transform: skew(0deg);
+          -o-transform: skew(0deg);
+          transform: skew(0deg);
+        }
       }
     }
     .cake3{
@@ -199,8 +270,16 @@ export const AboutUsContainer = styled.div`
     .img-collague{
       display: flex;
       gap: 4rem;
+      @media(max-width: 960px) {
+        justify-content: space-between;
+        gap: 0%;
+        margin: 5%;
+      }
       img{
         filter: drop-shadow(4px 7px 10px rgba(0, 0, 0, 0.25));
+        @media(max-width: 960px) {
+          width: 30%;
+        }
       }
     }
   }

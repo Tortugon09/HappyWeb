@@ -21,7 +21,7 @@ export function BodyHome() {
                     <div className="text1">
                         <h1>HAPPY</h1>
                         <h2>POSTRES Y MAS</h2>
-                        <h4><Link to={"/Pasteles"}>ORDENAR AHORA</Link> </h4>
+                        <h4><Link to={"/HappyWeb/Pasteles"}>ORDENAR AHORA</Link> </h4>
                     </div>
                 </div>
             </BodyContainer>

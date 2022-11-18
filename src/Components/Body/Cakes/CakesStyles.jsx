@@ -25,6 +25,10 @@ export const CakeContainer = styled.div`
     line-height: 32px;
     color: #DD722E;
     -webkit-text-stroke: 2px #FFFFFF;
+    @media(max-width: 960px) {
+      font-size: 1rem;
+      -webkit-text-stroke: 0.5px #FFFFFF;
+    }
     
 
   }
@@ -41,8 +45,11 @@ export const CakeContainer = styled.div`
     color: #FFFFFF;
     text-align: center;
     padding: 4%;
-    height: 200px;
+    height: 100px;
     box-sizing: border-box;
+    @media(max-width: 960px) {
+      font-size: 0.7rem;
+    }
   }
   h3{
     margin: 0px;
@@ -53,6 +60,9 @@ export const CakeContainer = styled.div`
     color: #FFFFFF;
     padding: 3%;
     box-sizing: border-box;
+    @media(max-width: 960px) {
+      font-size: 1rem;
+    }
   }
   &:hover{
     background: #DD722E;
@@ -75,6 +85,9 @@ export const CakeContainer = styled.div`
     transition: all 0.3s ease;
     &:hover{
       background: black;
+    }
+    @media(max-width: 960px) {
+      font-size: 1rem;
     }
   }
 `
@@ -133,6 +146,12 @@ export const NavCakes = styled.nav`
       font-size: 2.3rem;
       color: #000000;
       list-style: none;
+      @media(max-width: 960px) {
+        font-size: 1.5rem;
+      }
+      @media(max-width: 450px) {
+        font-size: 1rem;
+      }
     }
   }
 `
@@ -147,6 +166,12 @@ export const BodyCakeStyled = styled.div`
     width: 50%;
     max-height: 200px;
     margin-bottom: 6%;
+    @media(max-width: 960px) {
+      width: 80%;
+    }
+  }
+  @media(max-width: 960px) {
+    padding-top: 45%;
   }
 
 
