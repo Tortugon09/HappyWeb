@@ -362,7 +362,7 @@ Error generating stack: `+l.message+`
         @media(min-width: 1850px){
           font-size: 9rem;
         }
-        @media(max-width: 400px) {
+        @media(max-width: 450px) {
           font-size: 5rem;
         }
 
