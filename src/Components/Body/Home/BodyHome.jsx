@@ -33,7 +33,7 @@ export function BodyHome() {
                     </div>
                     <div className="cake2 , boxs">
                         <img src={cake2}/>
-                        <h3>Personalisados <FaAngleDoubleRight/></h3>
+                        <h3>Personalizados <FaAngleDoubleRight/></h3>
                     </div>
                     <div className="cake3 , boxs">
                         <img src={cake3}/>

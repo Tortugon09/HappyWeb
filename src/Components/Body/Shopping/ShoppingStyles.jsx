@@ -80,6 +80,11 @@ export const Buttom = styled.button`
   font-weight: 400;
   font-size: 1.2rem;
   color: #DD722E;
+  transition: all 0.3s ease;
+  &:hover{
+    background: white;
+    border-radius: 20%;
+  }
   @media(max-width: 960px) {
     font-size: 1rem;
   }
@@ -105,6 +110,19 @@ export const ShoppingBox = styled.section`
     font-weight: 400;
     font-size: 2rem;
     color: #CC3874;
+  }
+  .header{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    h2{
+      width: 70%;
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 2rem;
+      color: #CC3874;
+    }
   }
 `
 export const BuyAll = styled.div `

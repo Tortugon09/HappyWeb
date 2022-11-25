@@ -22,6 +22,7 @@ export function BodyProducts() {
     const handleSubmit = e => {
         e.preventDefault()
         addProduct(product);
+        setmodal1(!modal1)
     }
 
         return (

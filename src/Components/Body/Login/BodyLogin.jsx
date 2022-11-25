@@ -1,12 +1,31 @@
 import {FormBox, FormContainer, InputStyled} from "./LoginStyles";
 import FormImg from "../../../assets/Img/Body/Form/FormImg.jpg"
-import {useState} from "react";
 import {InputBox1} from "./InputBox1";
-import {Link} from "react-router-dom";
+import {useContext, useImperativeHandle, useState} from "react";
+import {Link, Navigate, useHref, useNavigate} from "react-router-dom";
+import {CartContext} from "../../../Context/CartContext.jsx";
 
 export function BodyLogin() {
     let label1 = "Username";
     let label2 = "Passoword";
+    const {login} = useContext(CartContext);
+    const [user, setuser] = useState({
+        email: "",
+        lastName: "",
+        name: "",
+        password: "",
+        phone: ""
+    })
+
+    const handleChange = (e) => {
+        setuser({...user,[e.target.name]: e.target.value})
+        console.log(user)
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        login(user);
+    }
+
     return (
         <>
             <FormBox>
@@ -14,13 +33,16 @@ export function BodyLogin() {
                 <FormContainer>
                     <div className="form-box">
                         <div className="form-title"><h2>Log In</h2></div>
-                        <div><form>
-                            <InputBox1 label={label1} type="text" id="name" htmlFor="name">
-                            </InputBox1>
-                            <InputBox1 label={label2} type="password" id="password" htmlFor="password"></InputBox1>
-                            <input  className="submit" type="submit" value="LogIn" id="btn-form-LogIn"  />
-                            <div><Link to={"/HappyWeb/Register"}>¿No tienes una cuenta? Registrate Aqui</Link></div>
-                        </form></div>
+                        <div>
+                            <form onSubmit={handleSubmit}>
+                                <label htmlFor="email">Email</label>
+                                <input className="input" onChange={handleChange} name="email" type="email" id="email" htmlFor="email" required></input>
+                                <label htmlFor="password">Contraseña</label>
+                                <input className="input" onChange={handleChange} name="password" type="password" id="password" htmlFor="password" required></input>
+                                <Link to={"/HappyWeb/Register"}>No tienes cuenta? registrate aqui</Link>
+                                <input className="submit" type="submit" value="Login" id="btn-form-register" required/>
+                            </form>
+                        </div>
                     </div>
                 </FormContainer>
             </FormBox>

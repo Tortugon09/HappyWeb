@@ -2,10 +2,12 @@ import {CakeContainer} from "./CakesStyles";
 import {useContext} from "react";
 import {CartContext} from "../../../Context/CartContext.jsx";
 import Img from "../../../assets/Img/ImgCake.png"
+import { useDispatch, useSelector } from "react-redux";
+import {addItemToCart} from "../../../actions/cartActions.jsx";
 
 export function CakeBox({data}) {
-    const { addItemToCart} = useContext(CartContext);
-
+    const dispatch = useDispatch();
+    const state =  useSelector((state => state))
     let {id,name,description,price} = data;
     return (
         <>
@@ -14,7 +16,7 @@ export function CakeBox({data}) {
             <img src={Img}/>
             <div className="text">{description}</div>
             <h3>{price}</h3>
-            <button onClick={() => addItemToCart(data)}>Agregar</button>
+            <button onClick={() => dispatch(addItemToCart(data))}>Agregar</button>
         </CakeContainer>
 
 

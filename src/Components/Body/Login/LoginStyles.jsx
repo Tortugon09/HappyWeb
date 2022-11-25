@@ -58,6 +58,13 @@ export const FormContainer = styled.div`
         text-decoration: none;
 
       }
+      .input{
+        border: none;
+        border-bottom: 0.1rem solid #FFFFFF;
+        background: none;
+        outline: none;
+        width: 80%;
+      }
       .submit{
         margin-top: 3%;
         height: 15%;

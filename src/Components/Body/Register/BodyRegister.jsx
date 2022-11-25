@@ -1,25 +1,31 @@
 import {FormBox, FormContainer} from "../Login/LoginStyles.jsx";
-import {InputBox1} from "../Login/InputBox1.jsx";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {createUser} from "../../../actions/userActions.jsx";
+import {useContext} from "react";
+import {CartContext} from "../../../Context/CartContext.jsx";
 
 export function BodyRegister() {
-    let label1 = "Nombre",
-        label2 = "Password",
-        label3 = "Email",
-        label4 = "Apellidos",
-        label5 = "Numero de telefono";
+    const dispatch = useDispatch()
+    const {createUserPost} = useContext(CartContext);
     const [client, setclient] = useState({
         email: "",
-        last_name: "",
+        lastName: "",
         name: "",
         password: "",
         phone: ""
     })
-    const handleChange = (name,vaule) => {
-        setclient({[e.target.name]: e.target.value})
+    const handleChange = (e) => {
+        setclient({...client,[e.target.name]: e.target.value})
         console.log(client)
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        createUserPost(client);
+    }
+
     return (
         <>
             <FormBox>
@@ -27,14 +33,19 @@ export function BodyRegister() {
                 <FormContainer>
                     <div className="form-box">
                         <div className="form-title"><h2>Registro</h2></div>
-                        <div><form>
-                            <InputBox1 handleChange={handleChange} label={label1} name="nombre" type="text" id="name" htmlFor="name"></InputBox1>
-                            <InputBox1 label={label4} name="last_name" type="text" id="password" htmlFor="password"></InputBox1>
-                            <InputBox1 label={label3} name="email" type="email" id="email" htmlFor="email"></InputBox1>
-                            <InputBox1 label={label2} name="password" type="password" id="password" htmlFor="password"></InputBox1>
-                            <InputBox1 label={label5} name="phone" type="number" id="password" htmlFor="password"></InputBox1>
-                            <input  className="submit" type="submit" value="Register" id="btn-form-register"  />
-                            <div><Link to={"/LogIn"}>¿Ya tienes una cuenta? Entra Aqui</Link></div>
+                        <div><form onSubmit={handleSubmit}>
+                            <label htmlFor="name">Nombre</label>
+                            <input className="input" onChange={handleChange} name="name" type="text" id="name" htmlFor="name" required></input>
+                            <label htmlFor="lastname">Apellidos</label>
+                            <input className="input" onChange={handleChange} name="lastName" type="text" id="lastname" htmlFor="lastname" required></input>
+                            <label htmlFor="email">Email</label>
+                            <input className="input" onChange={handleChange} name="email" type="email" id="email" htmlFor="email" required></input>
+                            <label htmlFor="password">Contraseña</label>
+                            <input className="input" onChange={handleChange} name="password" type="password" id="password" htmlFor="password" required></input>
+                            <label htmlFor="phone">Numero de Telefono</label>
+                            <input className="input" onChange={handleChange} name="phone" type="number" id="phone" htmlFor="phone" required></input>
+                            <input className="submit" type="submit" value="Register" id="btn-form-register" required/>
+                            <div><Link to={"/HappyWeb/LogIn"}>¿Ya tienes una cuenta? Entra Aqui</Link></div>
                         </form></div>
                     </div>
                 </FormContainer>

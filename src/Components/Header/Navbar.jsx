@@ -1,20 +1,24 @@
 import {EffectM, NavContainer} from "./NavStyles";
 import IconNav from "../../assets/Img/Header/IconHappy.svg"
-import {FaSistrix,FaShoppingCart,FaHome,FaBirthdayCake, FaUserAlt} from "react-icons/fa"
+import {FaSistrix,FaShoppingCart,FaHome,FaBirthdayCake, FaUserAlt, FaUserCog} from "react-icons/fa"
 import {IconContext} from "react-icons"
 import {Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {CartContext} from "../../Context/CartContext.jsx";
+import {useSelector} from "react-redux";
 
 export function Navbar() {
-    const {cartItems} = useContext(CartContext)
+    const state = useSelector((state) => state);
+    const {db} = state.cart;
     const [productsLength, setProductsLength] = useState(0)
     useEffect(() => {
         setProductsLength(
-            cartItems.reduce((previous, current) => previous +current.amount, 0)
+            db.reduce((previous, current) => previous +current.amount, 0)
         );
-    }, [cartItems]);
-    console.log(cartItems)
+    }, [db]);
+    const {loginUser, userR} = useContext(CartContext)
+    console.log(loginUser)
+    console.log(db)
 
     return (
         <>
@@ -28,7 +32,7 @@ export function Navbar() {
                                 <li><Link to={"/HappyWeb"}><FaHome></FaHome></Link></li>
                                 <li><Link to={"/HappyWeb/Pasteles"}><FaBirthdayCake></FaBirthdayCake></Link></li>
                                 <li><Link to={"/HappyWeb/ShoppingCar"}><p>{productsLength}</p><FaShoppingCart/></Link></li>
-                                <li><Link to={"/HappyWeb/LogIn"}><FaUserAlt></FaUserAlt></Link></li>
+                                <li>{loginUser === false ? <Link to={"/HappyWeb/LogIn"}><FaUserAlt></FaUserAlt></Link> : <Link to={"/HappyWeb/UserDates"}><FaUserCog></FaUserCog></Link> }</li>
                             </div>
                             <div className="menu-desktop">
                                 <li><Link to={"/HappyWeb"}>Home</Link></li>
@@ -44,7 +48,7 @@ export function Navbar() {
                             </div>
                         </div>
                         <Link to={"/HappyWeb/ShoppingCar"}><FaShoppingCart/><p>{productsLength}</p></Link>
-                        <h3><Link to={"/HappyWeb/LogIn"} >Login </Link></h3>
+                        <h3>{loginUser === false ? <Link to={"/HappyWeb/LogIn"}>Login</Link> : <Link to={"/HappyWeb/UserDates"}>{userR.userInDb.name}</Link> }</h3>
 
                     </div>
                 </div>

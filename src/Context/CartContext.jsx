@@ -1,20 +1,35 @@
 import {createContext, useState, useEffect, useReducer} from "react";
 import axios from "axios";
-import {console} from "next/dist/compiled/@edge-runtime/primitives/console.js";
+import {useDispatch, useSelector} from "react-redux";
+import {useHref} from "react-router";
+import {useNavigate} from "react-router-dom";
 
 export const CartContext = createContext();
 
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(() => {
+    const navigate = useNavigate();
+    const state = useSelector((state) => state);
+    const {user} = state.users;
+    const [products, setProducts] = useState([]);
+    const [users, setUsers] = useState([])
+    const [userR, setUserR] = useState(() => {
         try {
-            const ProductsInLocalStorage = localStorage.getItem('cartProducts')
+            const ProductsInLocalStorage = localStorage.getItem('LoginUserR')
             return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : []
         } catch (error) {
             return [];
         }
     })
-    const [products, setProducts] = useState([]);
+    const [loginUser, setLoginUser] = useState(() => {
+        try {
+            const ProductsInLocalStorage = localStorage.getItem('LoginUser')
+            return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : [true]
+        } catch (error) {
+            return [true];
+        }
+    })
+    console.log(users)
 
     const getProducts = async () => {
         await axios
@@ -23,69 +38,19 @@ export const CartProvider = ({ children }) => {
 
 
     };
-    const getProductsCart = async () => {
-        return await axios
-            .get("http://localhost:8080/product-order")
-            .then(({ data }) => setCartItems(data.data))
-            .catch((error) => console.error(error));
-    };
+    useEffect(() =>{
+        localStorage.setItem("LoginUser", JSON.stringify(loginUser))
+    }, [loginUser]);
+    useEffect(() =>{
+        localStorage.setItem("LoginUserR", JSON.stringify(userR))
+    }, [userR]);
 
     useEffect(() => {
         getProducts();
-        getProductsCart();
     }, []);
-
-    const addItemToCart = (product) => {
-        const inCart = cartItems.find(
-            (productInCart) => productInCart.id === product.id
-        );
-        if (inCart) {
-            setCartItems(
-                cartItems.map((productInCart) => {
-                    if(productInCart.id === product.id){
-                        return {...inCart, amount: inCart.amount+1}
-                    } else return productInCart;
-                })
-            )
-        } else {
-            setCartItems([...cartItems, {...product, amount: 1}])
-        }
-    }
-    const  removeItemFromCart = (product) => {
-        const inCart = cartItems.find(
-            (productInCart) => productInCart.id === product.id
-        );
-
-        if(inCart.amount === 1){
-            setCartItems(
-                cartItems.filter((productInCart) => productInCart.id !== product.id)
-            );
-        } else {
-            setCartItems(
-                cartItems.map((productInCart)=> {
-                    if(productInCart.id === product.id){
-                        return{...inCart, amount: inCart.amount -1}
-                    } else return productInCart
-                }))
-        }
-    }
-
-    const editItemToCart = async (id, query, amount) => {
-        if (query === "del" && amount === 1) {
-            await axios
-                .delete(`http:/products-cart/${id}`)
-                .then(({ data }) => console.log(data));
-        } else {
-            await axios
-                .put(`http:/products-cart/${id}?query=${query}`, {
-                    amount,
-                })
-                .then(({ data }) => console.log(data));
-        }
-
-        getProducts();
-        getProductsCart();
-    };
+    useEffect(() => {
+        getUser();
+    }, []);
 
     const addProduct = async (product) => {
         const { description,name, quantity, price } = product;
@@ -93,7 +58,6 @@ export const CartProvider = ({ children }) => {
         await axios.post("http://localhost:8080/product", { description ,name, price, quantity });
 
         getProducts();
-        getProductsCart();
     };
     const editProduct = async (product) => {
         const { id, description, name, quantity, price } = product;
@@ -102,7 +66,6 @@ export const CartProvider = ({ children }) => {
             .put(`http://localhost:8080/product/${id}`, { description , name, price, quantity });
 
         getProducts();
-        getProductsCart();
     };
     const getproductId = async (product) => {
         const { id } = product;
@@ -111,7 +74,6 @@ export const CartProvider = ({ children }) => {
             .get(`http://localhost:8080/product/${id}`)
 
         getProducts();
-        getProductsCart();
     };
 
     const delateProduct = async (product) => {
@@ -121,14 +83,46 @@ export const CartProvider = ({ children }) => {
             .delete(`http://localhost:8080/product/${id}`)
 
         getProducts();
-        getProductsCart();
+    };
+
+    const login = (user) => {
+        const userInDb = users.find(
+            (userInDB) => userInDB.email === user.email
+        );
+        if (userInDb) {
+            setUserR( () => {
+                if (userInDb.name === user.password) {
+                    navigate("/HappyWeb")
+                    setLoginUser(true)
+                    return {userInDb}
+                }
+                else {
+                    setLoginUser(false)
+                    return {};
+                }
+
+            })
+        }
+
+        else setLoginUser(true)
+
+    }
+
+    const createUserPost= async(user) => {
+        setLoginUser(false)
+        const { email, lastName, name, password,phone } = user;
+        await axios.post("http://localhost:8080/client", { email ,lastName , name, password:password , phone:phone });}
+
+    const getUser = async () => {
+        await axios
+            .get("http://localhost:8080/client")
+            .then(({ data }) => setUsers(data.data));
     };
 
 
     return (
         <CartContext.Provider
-            value={{ cartItems, products, addItemToCart, editItemToCart, removeItemFromCart,addProduct,editProduct,delateProduct}}
-        >
+            value={{createUserPost,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct}}>
             {children}
         </CartContext.Provider>
     );
