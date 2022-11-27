@@ -5,10 +5,16 @@ import {CartContext} from "../../../Context/CartContext.jsx";
 import {Link} from "react-router-dom";
 import {Modal} from "../../../ControlPanel/Body/ProductsPanel/Modal.jsx";
 import {Contenido} from "../../../ControlPanel/Body/ProductsPanel/BodyProductsStyles.jsx";
+import {AddressDates} from "./AddressDates";
+import {CakeBox} from "../Cakes/CakeBox.jsx";
 
 export function BodyUserDates() {
-    const {setLoginUser,editUser, userR, setUserR} = useContext(CartContext)
+    //USE OF THE CONTEXT
+    const {setLoginUser,editUser, userR, setUserR, addAddress, address} = useContext(CartContext)
+
+    //DESTRUCTURATION OF THE USER
     const {id ,name, lastName, phone, email} = userR.userInDb
+    //STATES FOR THE USER
     const [modal1, setmodal1] = useState(false)
     console.log(userR.userInDb)
     const [updateUser, setUpdateUser] = useState({
@@ -19,17 +25,40 @@ export function BodyUserDates() {
         phone: 0,
         email:"",
     });
+    //STATES FOR THE ADDRESS
+    const [modal2, setmodal2] = useState(false)
+    const[newAddress, setNewAddress] = useState(
+        {
+            state: "",
+            city: "",
+            street: "",
+            houseNumber: "",
+            zipCode: 0,
+            clientId: id
+        }
+    )
+    console.log(address)
 
+
+    //Handles for the update the user
     const handleChange = e => {
         setUpdateUser({...updateUser ,[e.target.name]: e.target.value})
-        console.log(updateUser)
     }
     const handleSubmit = e => {
         e.preventDefault()
         editUser(updateUser)
-        console.log(userR)
         setmodal1(!modal1)
     }
+    //Handles for create a address
+    const handleChange1= e=>{
+        setNewAddress({...newAddress ,[e.target.name]: e.target.value})
+    }
+    const handleSubmit1 = e =>{
+        e.preventDefault()
+        addAddress(newAddress)
+        setmodal2(!modal2)
+    }
+
 
     return (
         <>
@@ -73,13 +102,15 @@ export function BodyUserDates() {
                         <FaGreaterThan></FaGreaterThan>
                     </div>
                     <div className="content-dates">
-                        <h4>Nombre de la direccion:</h4>
+                        {address.map((address) => <AddressDates key={address.id}   data={address}/>) }
                     </div>
                     <div className="buttoms">
-                        <button>Cambiar direccion</button>
+                        <button onClick={() => setmodal2(!modal2)}>Crear una direccion nueva</button>
                     </div>
                 </div>
             </UserContainer>
+
+            {/* MODAL FOR UPDATE A USER*/}
             <Modal
                 state={modal1}
                 changestate={setmodal1}
@@ -95,6 +126,34 @@ export function BodyUserDates() {
                         </input>
                         <label>Phone</label>
                         <input onChange={handleChange} name="phone" type="number" id="phone" htmlFor="phone">
+                        </input>
+                        <button>Agregar</button>
+                    </form>
+                </Contenido>
+            </Modal>
+
+            {/* MODAL FOR CREATE A ADDRESS*/}
+            <Modal
+                state={modal2}
+                changestate={setmodal2}
+                title="Agregar una direccion nueva"
+            >
+                <Contenido>
+                    <form onSubmit={handleSubmit1}>
+                        <label>Estado</label>
+                        <input onChange={handleChange1} name="state" type="text" id="state" htmlFor="state">
+                        </input>
+                        <label>Ciudad</label>
+                        <input onChange={handleChange1} name="city" type="text" id="city" htmlFor="city">
+                        </input>
+                        <label>Calle y Colonia</label>
+                        <input onChange={handleChange1} name="street" type="text" id="street" htmlFor="street">
+                        </input>
+                        <label>Numero de casa</label>
+                        <input onChange={handleChange1} name="houseNumber" type="number" id="houseNumber" htmlFor="houseNumber">
+                        </input>
+                        <label>Codigo postal</label>
+                        <input onChange={handleChange1} name="zipCode" type="number" id="zipCode" htmlFor="zipCode">
                         </input>
                         <button>Agregar</button>
                     </form>

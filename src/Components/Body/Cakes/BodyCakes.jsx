@@ -7,7 +7,8 @@ import {useContext} from "react";
 import {CartContext} from "../../../Context/CartContext.jsx";
 
 export function BodyCakes() {
-    const {products } = useContext(CartContext);
+    const {products} = useContext(CartContext);
+    console.log(products)
     return (
         <>
             <BodyCakeStyled>
