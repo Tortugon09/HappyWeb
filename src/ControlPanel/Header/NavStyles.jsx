@@ -134,8 +134,8 @@ export const NavContainer = styled.nav`
 `
 
 export const EffectM = styled.div`
-  background-size: contain;
-  background-repeat: repeat-x;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: absolute;
   width: 100%;
   height: 26rem;

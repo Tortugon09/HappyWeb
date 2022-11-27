@@ -119,10 +119,19 @@ export const CartProvider = ({ children }) => {
             .then(({ data }) => setUsers(data.data));
     };
 
+    const editUser = async (user) => {
+        const {id, email, lastName, name, password,phone } = user;
+        console.log(lastName)
+        await axios
+            .put(`http://localhost:8080/client/${id}`, { email ,lastName , name, password:password , phone:phone });
+        getUser();
+        console.log(user)
+        setUserR({userInDb: {id:id, email:email, lastName: lastName, name:name,password:password, phone:phone}})
+    };
 
     return (
         <CartContext.Provider
-            value={{createUserPost,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct}}>
+            value={{createUserPost,editUser,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct}}>
             {children}
         </CartContext.Provider>
     );

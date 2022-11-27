@@ -10,7 +10,7 @@ export const NavContainer = styled.nav`
   top: 0px;
   right: 0px;
   left: 0px;
-  background: white;
+  background:  white;
   z-index: 3;
   @media(max-width: 960px){
     height: 80px;
@@ -193,7 +193,7 @@ export const EffectM = styled.div`
   height: 26rem;
   z-index: -1;
   @media(max-width: 1640px){
-    top: 12px;
+    top: 18px;
   }
   @media(max-width: 1326px){
     top: 60px;

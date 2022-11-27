@@ -24,7 +24,7 @@ export function Navbar() {
         <>
             <NavContainer>
                 <IconContext.Provider value={{ style: { fontSize: "2.5rem",} }}>
-                <div className="box-nav">
+                <div className="box-nav menu-back">
                     <div className="box1">
                         <img src={IconNav}/>
                         <div className="menu">
