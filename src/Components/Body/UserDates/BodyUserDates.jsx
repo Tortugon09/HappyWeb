@@ -1,6 +1,6 @@
 import {FaGreaterThan} from "react-icons/fa";
 import {UserContainer} from "./BodyUserStyles";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CartContext} from "../../../Context/CartContext.jsx";
 import {Link} from "react-router-dom";
 import {Modal} from "../../../ControlPanel/Body/ProductsPanel/Modal.jsx";
@@ -26,6 +26,14 @@ export function BodyUserDates() {
         email:"",
     });
     //STATES FOR THE ADDRESS
+    const [addressLength, setAddressLength] = useState(0)
+    useEffect(() => {
+        setAddressLength(
+            address.reduce((previous, current) => previous + current, 0)
+        );
+    }, [addressLength]);
+
+    console.log(addressLength)
     const [modal2, setmodal2] = useState(false)
     const[newAddress, setNewAddress] = useState(
         {
@@ -38,6 +46,7 @@ export function BodyUserDates() {
         }
     )
     console.log(address)
+
 
 
     //Handles for the update the user
@@ -101,11 +110,8 @@ export function BodyUserDates() {
                         <h3>Direcciones</h3>
                         <FaGreaterThan></FaGreaterThan>
                     </div>
-                    <div className="content-dates">
-                        {address.map((address) => <AddressDates key={address.id}   data={address}/>) }
-                    </div>
-                    <div className="buttoms">
-                        <button onClick={() => setmodal2(!modal2)}>Crear una direccion nueva</button>
+                        {address.map((address) => <AddressDates key={address.id}  addressLength={addressLength}  data={address}/>) }
+                    <div className="buttoms"><button onClick={ () => setmodal2(!modal2)}>Crear Nueva Direccion</button>
                     </div>
                 </div>
             </UserContainer>

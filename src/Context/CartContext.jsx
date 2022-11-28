@@ -35,7 +35,7 @@ export const CartContext = createContext();
         }
     })
     //STATES FOR THE ADDRESS
-    const [address, setAddress] = useState([])
+    const [address, setAddress] = useState([{}])
 
 
 
@@ -140,6 +140,7 @@ export const CartContext = createContext();
             const { email, lastName, name, password,phone } = user;
             await axios.post("http://localhost:8080/client", { email ,lastName , name, password:password , phone:phone });
             getUser();
+            navigate("/HappyWeb/LogIn")
         }
 
     const editUser = async (user) => {
@@ -160,12 +161,17 @@ export const CartContext = createContext();
     const addAddress = async(address) => {
         const {state, city, street, houseNumber, zipCode, clientId} = address;
         await axios.post("http://localhost:8080/address", {state, city, street, houseNumber, zipCode, clientId})
+        getAddress();
 
+    }
+    const delateAddress = async(id) => {
+        await axios.delete(`http://localhost:8080/address/${id}`)
+        getAddress();
     }
 
     return (
         <CartContext.Provider
-            value={{createUserPost,editUser,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct,addAddress,address}}>
+            value={{createUserPost,editUser,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct,addAddress,address, delateAddress}}>
             {children}
         </CartContext.Provider>
     );
