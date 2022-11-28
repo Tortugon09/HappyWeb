@@ -7,10 +7,11 @@ import {Modal} from "../../../ControlPanel/Body/ProductsPanel/Modal.jsx";
 import {Contenido} from "../../../ControlPanel/Body/ProductsPanel/BodyProductsStyles.jsx";
 import {AddressDates} from "./AddressDates";
 import {CakeBox} from "../Cakes/CakeBox.jsx";
+import {PaymentDates} from "./PaymentDates";
 
 export function BodyUserDates() {
     //USE OF THE CONTEXT
-    const {setLoginUser,editUser, userR, setUserR, addAddress, address} = useContext(CartContext)
+    const {setLoginUser,editUser, userR, setUserR, addAddress, address,payment,addPayment} = useContext(CartContext)
 
     //DESTRUCTURATION OF THE USER
     const {id ,name, lastName, phone, email} = userR.userInDb
@@ -32,20 +33,33 @@ export function BodyUserDates() {
             address.reduce((previous, current) => previous + current, 0)
         );
     }, [addressLength]);
-
     console.log(addressLength)
     const [modal2, setmodal2] = useState(false)
-    const[newAddress, setNewAddress] = useState(
-        {
+    const[newAddress, setNewAddress] = useState({
             state: "",
             city: "",
             street: "",
             houseNumber: "",
             zipCode: 0,
             clientId: id
-        }
-    )
-    console.log(address)
+        })
+    //STATES FOR THE PAYMENT
+    const [paymentLength, setPaymentLength] = useState(0)
+    useEffect(() => {
+        setPaymentLength(
+            payment.reduce((previous, current) => previous + current, 0)
+        );
+    }, [paymentLength]);
+    const[newPayment, setNewPayment] = useState({
+            cardNumber: 0,
+            dateExpiry: "",
+            cardHolder: "",
+            cardIssuer: "",
+            cvv: 0,
+            clientId: id
+        })
+    const [modal3, setmodal3] = useState(false)
+    console.log(payment)
 
 
 
@@ -66,6 +80,15 @@ export function BodyUserDates() {
         e.preventDefault()
         addAddress(newAddress)
         setmodal2(!modal2)
+    }
+    //Handles for create a payment
+    const handleChange2= e=>{
+        setNewPayment({...newPayment ,[e.target.name]: e.target.value})
+    }
+    const handleSubmit2 = e =>{
+        e.preventDefault()
+        addPayment(newPayment)
+        setmodal3(!modal3)
     }
 
 
@@ -114,6 +137,16 @@ export function BodyUserDates() {
                     <div className="buttoms"><button onClick={ () => setmodal2(!modal2)}>Crear Nueva Direccion</button>
                     </div>
                 </div>
+                <div className="dates">
+                    <div className="title-date">
+                        <h3>Metodos de pago</h3>
+                        <FaGreaterThan></FaGreaterThan>
+                    </div>
+                    {payment.map((payment) => <PaymentDates key={payment.id}  paymentLength={paymentLength}  data={payment}/>) }
+                    <div className="buttoms">
+                        <button onClick={() => setmodal3(!modal3)}>Crear un nuevo metodo de pago</button>
+                    </div>
+                </div>
             </UserContainer>
 
             {/* MODAL FOR UPDATE A USER*/}
@@ -160,6 +193,33 @@ export function BodyUserDates() {
                         </input>
                         <label>Codigo postal</label>
                         <input onChange={handleChange1} name="zipCode" type="number" id="zipCode" htmlFor="zipCode">
+                        </input>
+                        <button>Agregar</button>
+                    </form>
+                </Contenido>
+            </Modal>
+            {/* MODAL FOR CREATE A ADDRESS*/}
+            <Modal
+                state={modal3}
+                changestate={setmodal3}
+                title="Agregar un nuevo metodo de pago"
+            >
+                <Contenido>
+                    <form onSubmit={handleSubmit2}>
+                        <label>Numero de tarjeta</label>
+                        <input onChange={handleChange2} name="cardNumber" type="number" id="cardNumber" htmlFor="cardNumber">
+                        </input>
+                        <label>Fecha de caducidad</label>
+                        <input onChange={handleChange2} name="dateExpiry" type="text" id="dataExpiry" htmlFor="dataExpiry">
+                        </input>
+                        <label>Dueño de la tarjeta</label>
+                        <input onChange={handleChange2} name="cardHolder" type="text" id="cardHolder" htmlFor="cardHolder">
+                        </input>
+                        <label>Remitente de la tarjeta</label>
+                        <input onChange={handleChange2} name="cardIssuer" type="text" id="cardIssuer" htmlFor="cardIssuer">
+                        </input>
+                        <label>CVV</label>
+                        <input onChange={handleChange2} name="cvv" type="number" id="cvv" htmlFor="cvv">
                         </input>
                         <button>Agregar</button>
                     </form>

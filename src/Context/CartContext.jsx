@@ -1,7 +1,5 @@
 import {createContext, useState, useEffect, useReducer} from "react";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {useHref} from "react-router";
 import {useNavigate} from "react-router-dom";
 
 export const CartContext = createContext();
@@ -36,6 +34,8 @@ export const CartContext = createContext();
     })
     //STATES FOR THE ADDRESS
     const [address, setAddress] = useState([{}])
+    //STATES FOR THE PAYMENTS
+    const [payment,setPayment] = useState([{}])
 
 
 
@@ -61,6 +61,10 @@ export const CartContext = createContext();
         getAddress()
     }, []);
 
+    useEffect(() => {
+        getPayment();
+    }, [])
+
 
 
 
@@ -80,7 +84,6 @@ export const CartContext = createContext();
 
         getProducts();
     };
-
     const editProduct = async (product) => {
         const { id, description, name, quantity, price } = product;
         await axios
@@ -88,7 +91,6 @@ export const CartContext = createContext();
 
         getProducts();
     };
-
     const getproductId = async (product) => {
         const { id } = product;
         await axios
@@ -96,7 +98,6 @@ export const CartContext = createContext();
 
         getProducts();
     };
-
     const delateProduct = async (product) => {
         const { id } = product;
         await axios
@@ -128,13 +129,11 @@ export const CartContext = createContext();
         else setLoginUser(true)
 
     }
-
     const getUser = async () => {
         await axios
             .get("http://localhost:8080/client")
             .then(({ data }) => setUsers(data.data));
     };
-
     const createUserPost= async(user) => {
             setLoginUser(false)
             const { email, lastName, name, password,phone } = user;
@@ -142,7 +141,6 @@ export const CartContext = createContext();
             getUser();
             navigate("/HappyWeb/LogIn")
         }
-
     const editUser = async (user) => {
         const {id, email, lastName, name, password,phone } = user;
         console.log(lastName)
@@ -164,14 +162,82 @@ export const CartContext = createContext();
         getAddress();
 
     }
+    const putAddress = async (address) => {
+        const {id, state, city, street, houseNumber, zipCode, clientId} = address
+        await axios.put(`http://localhost:8080/address/${id}`, {state, city, street, houseNumber, zipCode, clientId})
+        getAddress();
+    }
     const delateAddress = async(id) => {
         await axios.delete(`http://localhost:8080/address/${id}`)
         getAddress();
     }
 
+    //REQUEST FOR THE PAYMENTS
+        const getPayment = async () => {
+            await axios.get("http://localhost:8080/payment")
+                .then(({ data }) => setPayment(data.data));
+        }
+        const addPayment = async(payment) => {
+            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
+            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            getPayment();
+
+        }
+        const putPayment = async (payment) => {
+            const {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment
+            await axios.put(`http://localhost:8080/payment/${id}`, {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            getPayment();
+        }
+        const delatePayment = async(id) => {
+            await axios.delete(`http://localhost:8080/payment/${id}`)
+            getPayment();
+        }
+    //REQUEST FOR THE SHIPPING
+        const addShipping = async(payment) => {
+            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
+            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            getPayment();
+
+        }
+    //REQUEST FOR THE BILL
+        const addBill = async(payment) => {
+            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
+            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            getPayment();
+
+        }
+    //REQUEST FOR THE STATUSORDER
+        const addStatusOrder = async(payment) => {
+            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
+            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            getPayment();
+
+        }
+
+
     return (
         <CartContext.Provider
-            value={{createUserPost,editUser,setUserR,login,setLoginUser, products,userR,loginUser,addProduct,editProduct,delateProduct,addAddress,address, delateAddress}}>
+            value={{
+                createUserPost,
+                editUser,
+                setUserR,
+                login,
+                setLoginUser,
+                products,
+                userR,
+                loginUser,
+                addProduct,
+                editProduct,
+                delateProduct,
+                addAddress,
+                address,
+                delateAddress,
+                payment,
+                putAddress,
+                addPayment,
+                putPayment,
+                delatePayment
+        }}>
             {children}
         </CartContext.Provider>
     );
