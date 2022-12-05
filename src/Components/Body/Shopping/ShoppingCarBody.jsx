@@ -1,17 +1,48 @@
 import {AddCar} from "./AddCar";
 import {Navbar} from "../../Header/Navbar";
 import {ShoppingBox, BuyAll, Buttom} from "./ShoppingStyles";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearCart} from "../../../actions/cartActions.jsx";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import {CartContext} from "../../../Context/CartContext.jsx";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 export function ShoppingCarBody() {
     const state = useSelector((state) => state);
+    const {addShipping} = useContext(CartContext)
     const dispatch = useDispatch();
     const {db} = state.cart;
     const [productsLength, setProductsLength] = useState(0);
+
+    const total = db?.reduce(
+        (previous, current) => previous + current.amount * current.price,
+        0
+    );
+    const iva = total * 0.16
+
+    //ORDER STATES
+    const [shipping, setShipping] = useState({
+        id:uuidv4(),
+        dateExit: new Date(),
+        dateReceived: new Date()
+    })
+    const [bill, setBill] = useState({
+        amount: total,
+        iva: iva,
+        date: new Date()
+    })
+    const [statuss,setStatuss] = useState({
+        status: "For Shipping",
+        dateOrderReceived: new Date(),
+        dateOrderEnded: new Date()
+
+    })
+
+    console.log(shipping)
 
     useEffect(() => {
         setProductsLength(
@@ -19,10 +50,9 @@ export function ShoppingCarBody() {
         );
     }, [db]);
 
-    const total = db?.reduce(
-        (previous, current) => previous + current.amount * current.price,
-        0
-    );
+    const handleclick = () =>{
+        addShipping(shipping,bill,statuss)
+    }
 
 
     console.log(db)
@@ -46,7 +76,7 @@ export function ShoppingCarBody() {
                             <h2>Total= {total}</h2>
                             <h2>Total con envio (+$300)= {total+300}</h2>
                         </div>
-                        <button>Pagar</button>
+                        <button onClick={handleclick}>Pagar</button>
                     </div>
                 </BuyAll>
             </ShoppingBox>

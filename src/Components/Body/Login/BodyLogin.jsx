@@ -8,7 +8,7 @@ import {CartContext} from "../../../Context/CartContext.jsx";
 export function BodyLogin() {
     let label1 = "Username";
     let label2 = "Passoword";
-    const {login} = useContext(CartContext);
+    const {login,getAddress,getPayment} = useContext(CartContext);
     const [user, setuser] = useState({
         email: "",
         lastName: "",
@@ -24,6 +24,7 @@ export function BodyLogin() {
     const handleSubmit = (e) => {
         e.preventDefault()
         login(user);
+        location.reload(true)
     }
 
     return (

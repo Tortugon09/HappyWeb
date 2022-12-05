@@ -14,7 +14,7 @@ export const CakeContainer = styled.div`
   transition: all 0.3s ease-in-out;
   img{
     width: 70%;
-    height: auto;
+    height: 200px;
   }
 
   h2 {
@@ -160,6 +160,7 @@ export const BodyCakeStyled = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25%;
+  padding-bottom: 5%;
   justify-content: center;
   align-items: center;
   .nav-container{

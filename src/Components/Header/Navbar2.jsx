@@ -31,13 +31,13 @@ export function Navbar2() {
                         <img src={IconNav}/>
                         <div className="menu">
                             <div className="mobile-menu">
-                                <li><Link to={"/HappyWeb"}><FaHome></FaHome></Link></li>
+                                <li><Link to={"/HappyWeb/HappyWeb"}><FaHome></FaHome></Link></li>
                                 <li><Link to={"/HappyWeb/Pasteles"}><FaBirthdayCake></FaBirthdayCake></Link></li>
                                 <li><Link to={"/HappyWeb/ShoppingCar"}><p>{productsLength}</p><FaShoppingCart/></Link></li>
-                                <li>{loginUser === false ? <Link to={"/HappyWeb/LogIn"}><FaUserAlt></FaUserAlt></Link> : <Link to={"/HappyWeb/UserDates"}> <FaUserCog></FaUserCog></Link>}</li>
+                                <li>{!loginUser ? <Link to={"/HappyWeb/LogIn"}><FaUserAlt></FaUserAlt></Link> : <Link to={"/HappyWeb/UserDates"}> <FaUserCog></FaUserCog></Link>}</li>
                             </div>
                             <div className="menu-desktop">
-                                <li><Link to={"/HappyWeb"}>Home</Link></li>
+                                <li><Link to={"/HappyWeb/HappyWeb"}>Home</Link></li>
                                 <li><Link to={"/HappyWeb/Pasteles"}>Pasteles</Link></li>
                             </div>
                         </div>
@@ -50,7 +50,7 @@ export function Navbar2() {
                             </div>
                         </div>
                         <Link to={"/HappyWeb/ShoppingCar"}><FaShoppingCart/><p>{productsLength}</p></Link>
-                        <h3>{loginUser === false ? <Link to={"/HappyWeb/LogIn"}>Login</Link> : <Link to={"/HappyWeb/UserDates"}>{userR.userInDb.name}</Link> }</h3>
+                        <h3>{!loginUser ? <Link to={"/HappyWeb/LogIn"}>Login</Link> : <Link to={"/HappyWeb/UserDates"}>{userR.userInDb.name}</Link> }</h3>
 
                     </div>
                 </div>

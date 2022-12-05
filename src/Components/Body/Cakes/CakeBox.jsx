@@ -8,12 +8,12 @@ import {addItemToCart} from "../../../actions/cartActions.jsx";
 export function CakeBox({data}) {
     const dispatch = useDispatch();
     const state =  useSelector((state => state))
-    let {id,name,description,price} = data;
+    let {id,name,description,price,cakePicture} = data;
     return (
         <>
         <CakeContainer>
             <h2>{name}</h2>
-            <img src={Img}/>
+            <img src={cakePicture} alt="Img Cake"/>
             <div className="text">{description}</div>
             <h3>{price}</h3>
             <button onClick={() => dispatch(addItemToCart(data))}>Agregar</button>

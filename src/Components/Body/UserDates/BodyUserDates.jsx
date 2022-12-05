@@ -97,7 +97,7 @@ export function BodyUserDates() {
             <UserContainer className="main-box">
                 <div className="title">
                     <h2>Perfil</h2>
-                    <Link to={"/HappyWeb"}><button onClick={() => {
+                    <Link to={"/HappyWeb/HappyWeb"}><button onClick={() => {
                         setUserR([])
                         setLoginUser(false)}}>Cerrar Sesion</button></Link>
                 </div>

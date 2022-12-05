@@ -1,15 +1,25 @@
 import {createContext, useState, useEffect, useReducer} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import {useSelector} from "react-redux";
+
 
 export const CartContext = createContext();
 
 
     export const CartProvider = ({ children }) => {
         const navigate = useNavigate();
+
+
+        const [order,setOrder] =useState({
+            shippingId: 0 ,
+            billId: 0 ,
+            statusOrderId: 0
+        })
     //STATES FOR THE PRODUCTS
     const [products, setProducts] = useState([]);
-
     //STATES FOR THE USERS
 
         //STATE FOR ALL USERS
@@ -27,16 +37,17 @@ export const CartContext = createContext();
     const [loginUser, setLoginUser] = useState(() => {
         try {
             const ProductsInLocalStorage = localStorage.getItem('LoginUser')
-            return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : [true]
+            return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : false
         } catch (error) {
-            return [true];
+            return false;
         }
     })
     //STATES FOR THE ADDRESS
     const [address, setAddress] = useState([{}])
     //STATES FOR THE PAYMENTS
     const [payment,setPayment] = useState([{}])
-
+    console.log(payment)
+    console.log(address)
 
 
     //EJECUTE FOR THE REQUESTS
@@ -65,6 +76,14 @@ export const CartContext = createContext();
         getPayment();
     }, [])
 
+        const getPayment = async () => {
+            await axios.get(`http://localhost:8080/payment/client/${userR.userInDb.id}`)
+                .then(({ data }) => setPayment(data.data));
+        }
+        const getAddress = async () => {
+            await axios.get(`http://localhost:8080/address/client/${userR.userInDb.id}`)
+                .then(({ data }) => setAddress(data.data));
+        }
 
 
 
@@ -114,7 +133,7 @@ export const CartContext = createContext();
         if (userInDb) {
             setUserR( () => {
                 if (userInDb.name === user.password) {
-                    navigate("/HappyWeb")
+                    navigate("/HappyWeb/HappyWeb")
                     setLoginUser(true)
                     return {userInDb}
                 }
@@ -126,7 +145,7 @@ export const CartContext = createContext();
             })
         }
 
-        else setLoginUser(true)
+        else setLoginUser(false)
 
     }
     const getUser = async () => {
@@ -135,9 +154,8 @@ export const CartContext = createContext();
             .then(({ data }) => setUsers(data.data));
     };
     const createUserPost= async(user) => {
-            setLoginUser(false)
             const { email, lastName, name, password,phone } = user;
-            await axios.post("http://localhost:8080/client", { email ,lastName , name, password:password , phone:phone });
+            await axios.post("http://localhost:8080/client", { email ,lastName , name, password , phone });
             getUser();
             navigate("/HappyWeb/LogIn")
         }
@@ -152,10 +170,6 @@ export const CartContext = createContext();
     };
 
     //REQUEST FOR THE DIRECCIONS
-    const getAddress = async () => {
-        await axios.get("http://localhost:8080/address")
-            .then(({ data }) => setAddress(data.data));
-    }
     const addAddress = async(address) => {
         const {state, city, street, houseNumber, zipCode, clientId} = address;
         await axios.post("http://localhost:8080/address", {state, city, street, houseNumber, zipCode, clientId})
@@ -173,10 +187,6 @@ export const CartContext = createContext();
     }
 
     //REQUEST FOR THE PAYMENTS
-        const getPayment = async () => {
-            await axios.get("http://localhost:8080/payment")
-                .then(({ data }) => setPayment(data.data));
-        }
         const addPayment = async(payment) => {
             const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
             await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
@@ -192,26 +202,83 @@ export const CartContext = createContext();
             await axios.delete(`http://localhost:8080/payment/${id}`)
             getPayment();
         }
+
+
     //REQUEST FOR THE SHIPPING
-        const addShipping = async(payment) => {
-            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
-            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
-            getPayment();
+        const addShipping = async(shipping, bill,statuss) => {
+            const {dateExit,dateReceived} = shipping;
+            var id = "d";
+            await axios.post("http://localhost:8080/shipping", {dateExit,dateReceived})
+                .then(function (response) {
+                    console.log(response.data.data.id)
+                        id = response.data.data.id;
+
+            }).catch(function (error) {
+                console.log(error);
+            })
+            addBill(bill,statuss,id);
 
         }
     //REQUEST FOR THE BILL
-        const addBill = async(payment) => {
-            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
-            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
-            getPayment();
+        const addBill = async(bill,statuss,shippingId) => {
+            const {amount,iva,date} = bill;
+            var id = "d";
+            await axios.post("http://localhost:8080/bill", {amount,iva,date})
+                .then(function (response) {
+                    console.log(response.data.data.id)
+                    id = response.data.data.id;
+
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            addStatusOrder(statuss,shippingId,id)
 
         }
     //REQUEST FOR THE STATUSORDER
-        const addStatusOrder = async(payment) => {
-            const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
-            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
-            getPayment();
+        const addStatusOrder = async(statuss,shippingId,billId) => {
+            const {status,dateOrderReceived,dateOrderEnded} = statuss;
+            var id = "d";
+            await axios.post("http://localhost:8080/statusOrder", {status,dateOrderReceived,dateOrderEnded})
+                .then(function (response) {
+                    console.log(response.data.data.id)
+                    id = response.data.data.id;
 
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            addOrder(dateOrderReceived,shippingId,billId,id)
+        }
+
+        const addOrder = async(date,shippingId,billId,statusOrderId) => {
+            console.log(shippingId)
+            console.log(billId)
+            console.log(statusOrderId)
+            var id = "d";
+            const clientId = userR.userInDb.id
+            await axios.post("http://localhost:8080/order", {date,clientId, shippingId, billId, statusOrderId})
+                .then(function (response) {
+                    console.log(response.data.data.id)
+                    id = response.data.data.id;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            addOrderPivot(id)
+        }
+        const state = useSelector((state) => state);
+        const {db} = state.cart;
+
+
+
+        const addOrderPivot = (orderId) => {
+            db.map(async (posts) =>{
+                const productId = posts.id
+                await axios.post("http://localhost:8080/product-order", {productId,orderId})
+                    .then(function (response) {
+                        console.log(response.data.data.id)
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
+            })
         }
 
 
@@ -236,7 +303,9 @@ export const CartContext = createContext();
                 putAddress,
                 addPayment,
                 putPayment,
-                delatePayment
+                delatePayment,
+                addShipping,
+                users
         }}>
             {children}
         </CartContext.Provider>

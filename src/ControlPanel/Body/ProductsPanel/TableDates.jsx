@@ -12,8 +12,8 @@ export function TableDates({data}) {
         id: id ,
         description: "",
         name:"",
-        price: price,
-        quantity:quantity,
+        price: "",
+        quantity:"",
     });
 
     const handleChange = e => {

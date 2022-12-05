@@ -1,4 +1,4 @@
-import styled from "styled-components";
+    import styled from "styled-components";
 import Background from "../../assets/Img/Header/backgroundHeader.svg"
 
 export const NavContainer = styled.nav`
