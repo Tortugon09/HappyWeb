@@ -107,7 +107,7 @@ export const CartContext = createContext();
         // REQUEST FOR THE PRODUCTS
         const getProducts = async () => {
             await axios
-                .get("http://localhost:8080/product/list")
+                .get("http://3.16.48.171:8080/product/list")
                 .then(({ data }) => setProducts(data.data));
 
 
