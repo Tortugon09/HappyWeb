@@ -164,6 +164,9 @@ export const HomeCakeContainer = styled.div`
       background: #E56A77;
       
     }
+    a{
+      text-decoration: none;
+    }
     .cake2{
       background: #CC3874;
       -webkit-transform: skew(-20deg);

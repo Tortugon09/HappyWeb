@@ -13,6 +13,7 @@ export const CartContext = createContext();
 
 
         const navigate = useNavigate();
+        const [open, setOpen] = useState(false);
 
 
         const [order,setOrder] =useState({
@@ -66,7 +67,9 @@ export const CartContext = createContext();
 
 
     //EJECUTE FOR THE REQUESTS
-
+        useEffect(() => {
+            getProducts();
+        }, []);
     useEffect(() =>{
         localStorage.setItem("LoginUser", JSON.stringify(loginUser))
     }, [loginUser]);
@@ -77,21 +80,25 @@ export const CartContext = createContext();
         useEffect(() =>{
             localStorage.setItem("token", JSON.stringify(token))
         }, [token]);
+        useEffect(() => {
+            getAddress();
+        }, []);
+        useEffect(() => {
+            getPayment();
+        }, []);
 
-    useEffect(() => {
-        getProducts();
-    }, []);
+
 
 
 
         const getPayment = async () => {
             const {id} = userR[0]
-            await axios.get(`http://localhost:8080/payment/client/${id}`)
+            await axios.get(`http://3.16.48.171:8080/payment/client/${id}`)
                 .then(({ data }) => setPayment(data.data));
         }
         const getAddress = async () => {
             const {id} = userR[0]
-            await axios.get(`http://localhost:8080/address/client/${id}`)
+            await axios.get(`http://3.16.48.171:8080/address/client/${id}`)
                 .then(({ data }) => setAddress(data.data));
         }
 
@@ -105,25 +112,26 @@ export const CartContext = createContext();
 
 
         };
+
         //POST PRODUCT
     const addProduct = async (product) => {
         const { description,name, quantity, price } = product;
 
-        await axios.post("http://localhost:8080/product", { description ,name, price, quantity });
+        await axios.post("http://3.16.48.171:8080/product", { description ,name, price, quantity });
 
         getProducts();
     };
     const editProduct = async (product) => {
         const { id, description, name, quantity, price } = product;
         await axios
-            .put(`http://localhost:8080/product/${id}`, { description , name, price, quantity });
+            .put(`http://3.16.48.171:8080/product/${id}`, { description , name, price, quantity });
 
         getProducts();
     };
     const delateProduct = async (product) => {
         const { id } = product;
         await axios
-            .delete(`http://localhost:8080/product/${id}`)
+            .delete(`http://3.16.48.171:8080/product/${id}`)
 
         getProducts();
     };
@@ -132,12 +140,12 @@ export const CartContext = createContext();
         const login = async (user) => {
             const {email, password} = user
             await axios
-                .post("http://localhost:8080/login", {email,password})
+                .post("http://3.16.48.171:8080/login", {email,password})
                 .then( async(response) => {
                     setToken(response.headers['authorization'])
                     await axios({
                         method: 'get',
-                        url: `http://localhost:8080/client/findByEmail?email=${email}`,
+                        url: `http://3.16.48.171:8080/client/findByEmail?email=${email}`,
                         headers: {'Authorization': `${response.headers['authorization']}`}
                     }).then(function (response) {
                         console.log(response.data.data)
@@ -147,13 +155,15 @@ export const CartContext = createContext();
                     }).catch(function (error) {
                         console.log(error);
                     });
+                }).catch(function (error){
+                    setOpen(true)
                 })
         }
 
         const getUser = async () => {
             await axios({
                 method: 'get',
-                url: `http://localhost:8080/client/findByEmail?email=${userR[0].email}`,
+                url: `http://3.16.48.171:8080/client/findByEmail?email=${userR[0].email}`,
             }).then(function (response) {
                 console.log(response.data.data)
                 setUserR(response.data.data);
@@ -165,7 +175,7 @@ export const CartContext = createContext();
 
     const createUserPost= async(user) => {
             const { email, lastName, name, password,phone } = user;
-            await axios.post("http://localhost:8080/client/register", { email ,lastName , name, password , phone });
+            await axios.post("http://3.16.48.171:8080/client/register", { email ,lastName , name, password , phone });
             getUser();
             navigate("/HappyWeb/LogIn")
         }
@@ -174,7 +184,7 @@ export const CartContext = createContext();
         const {id, email, lastName, name, password,phone } = user;
         console.log(lastName)
         await axios
-            .put(`http://localhost:8080/client/${id}`, { email ,lastName , name, password:password , phone:phone });
+            .put(`http://3.16.48.171:8080/client/${id}`, { email ,lastName , name, password:password , phone:phone });
         getUser();
         console.log(user)
         setUserR({userInDb: {id:id, email:email, lastName: lastName, name:name,password:password, phone:phone}})
@@ -183,8 +193,9 @@ export const CartContext = createContext();
     //REQUEST FOR THE DIRECCIONS
     const addAddress = async(address) => {
         const {state, city, street, houseNumber, zipCode, clientId} = address;
-        await axios.post("http://localhost:8080/address", {state, city, street, houseNumber, zipCode, clientId})
+        await axios.post("http://3.16.48.171:8080/address", {state, city, street, houseNumber, zipCode, clientId})
             .then(function (response) {
+                setAddress(response.data)
                 getAddress()
             }).catch(function (error) {
                 console.log(error);
@@ -193,7 +204,7 @@ export const CartContext = createContext();
     }
     const putAddress = async (address) => {
         const {id, state, city, street, houseNumber, zipCode, clientId} = address
-        await axios.put(`http://localhost:8080/address/${id}`, {state, city, street, houseNumber, zipCode, clientId})
+        await axios.put(`http://3.16.48.171:8080/address/${id}`, {state, city, street, houseNumber, zipCode, clientId})
             .then(function (response) {
                 getAddress();
             }).catch(function (error) {
@@ -201,7 +212,7 @@ export const CartContext = createContext();
             })
     }
     const delateAddress = async(id) => {
-        await axios.delete(`http://localhost:8080/address/${id}`)
+        await axios.delete(`http://3.16.48.171:8080/address/${id}`)
             .then(function (response) {
                 getAddress()
             }).catch(function (error) {
@@ -213,7 +224,7 @@ export const CartContext = createContext();
     //REQUEST FOR THE PAYMENTS
         const addPayment = async(payment) => {
             const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
-            await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            await axios.post("http://3.16.48.171:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
                 .then(function (response) {
                     getPayment();
                 }).catch(function (error) {
@@ -223,7 +234,7 @@ export const CartContext = createContext();
         }
         const putPayment = async (payment) => {
             const {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment
-            await axios.put(`http://localhost:8080/payment/${id}`, {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
+            await axios.put(`http://3.16.48.171:8080/payment/${id}`, {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
                 .then(function (response) {
                     getPayment();
                 }).catch(function (error) {
@@ -232,7 +243,7 @@ export const CartContext = createContext();
         }
 
         const delatePayment = async(id) => {
-            await axios.delete(`http://localhost:8080/payment/${id}`)
+            await axios.delete(`http://3.16.48.171:8080/payment/${id}`)
                 .then(function (response) {
                     getPayment();
                 }).catch(function (error) {
@@ -245,7 +256,7 @@ export const CartContext = createContext();
         const addShipping = async(shipping, bill,statuss) => {
             const {dateExit,dateReceived} = shipping;
             var id = "d";
-            await axios.post("http://localhost:8080/shipping", {dateExit,dateReceived})
+            await axios.post("http://3.16.48.171:8080/shipping", {dateExit,dateReceived})
                 .then(function (response) {
                     console.log(response.data.data.id)
                         id = response.data.data.id;
@@ -260,7 +271,7 @@ export const CartContext = createContext();
         const addBill = async(bill,statuss,shippingId) => {
             const {amount,iva,date} = bill;
             var id = "d";
-            await axios.post("http://localhost:8080/bill", {amount,iva,date})
+            await axios.post("http://3.16.48.171:8080/bill", {amount,iva,date})
                 .then(function (response) {
                     console.log(response.data.data.id)
                     id = response.data.data.id;
@@ -275,7 +286,7 @@ export const CartContext = createContext();
         const addStatusOrder = async(statuss,shippingId,billId) => {
             const {status,dateOrderReceived,dateOrderEnded} = statuss;
             var id = "d";
-            await axios.post("http://localhost:8080/statusOrder", {status,dateOrderReceived,dateOrderEnded})
+            await axios.post("http://3.16.48.171:8080/statusOrder", {status,dateOrderReceived,dateOrderEnded})
                 .then(function (response) {
                     console.log(response.data.data.id)
                     id = response.data.data.id;
@@ -292,7 +303,7 @@ export const CartContext = createContext();
             console.log(statusOrderId)
             var id = "d";
             const clientId = userR.userInDb.id
-            await axios.post("http://localhost:8080/order", {date,clientId, shippingId, billId, statusOrderId})
+            await axios.post("http://3.16.48.171:8080/order", {date,clientId, shippingId, billId, statusOrderId})
                 .then(function (response) {
                     console.log(response.data.data.id)
                     id = response.data.data.id;
@@ -309,7 +320,7 @@ export const CartContext = createContext();
         const addOrderPivot = (orderId) => {
             db.map(async (posts) =>{
                 const productId = posts.id
-                await axios.post("http://localhost:8080/product-order", {productId,orderId})
+                await axios.post("http://3.16.48.171:8080/product-order", {productId,orderId})
                     .then(function (response) {
                         console.log(response.data.data.id)
                     }).catch(function (error) {
@@ -346,7 +357,9 @@ export const CartContext = createContext();
                 addShipping,
                 users,
                 token,
-                setToken
+                setToken,
+                setOpen,
+                open
 
         }}>
             {children}

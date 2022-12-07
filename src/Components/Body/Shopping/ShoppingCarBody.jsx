@@ -8,15 +8,35 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import {CartContext} from "../../../Context/CartContext.jsx";
 import { v4 as uuidv4 } from 'uuid';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText} from "@mui/material";
 
 
 
 export function ShoppingCarBody() {
     const state = useSelector((state) => state);
-    const {addShipping} = useContext(CartContext)
+    const {addShipping,loginUser,address,payment} = useContext(CartContext)
     const dispatch = useDispatch();
+    const [open,setOpen] = useState(false)
+    const [open1,setOpen1] = useState(false)
+    const [open2,setOpen2] = useState(false)
+    const [open3,setOpen3] = useState(false)
+    const [open4,setOpen4] = useState(false)
+    const [addressLength, setAddressLength] = useState(0)
+    useEffect(() => {
+        setAddressLength(
+            address.reduce((previous, current) => previous + current, 0)
+        );
+    }, [addressLength]);
+    const [paymentLength, setPaymentLength] = useState(0)
+    useEffect(() => {
+        setPaymentLength(
+            payment.reduce((previous, current) => previous + current, 0)
+        );
+    }, [paymentLength]);
     const {db} = state.cart;
     const [productsLength, setProductsLength] = useState(0);
+    console.log(payment)
+    console.log(address)
 
     const total = db?.reduce(
         (previous, current) => previous + current.amount * current.price,
@@ -42,8 +62,6 @@ export function ShoppingCarBody() {
 
     })
 
-    console.log(shipping)
-
     useEffect(() => {
         setProductsLength(
             db?.reduce((previous, current) => previous + current.amount, 0)
@@ -51,8 +69,39 @@ export function ShoppingCarBody() {
     }, [db]);
 
     const handleclick = () =>{
-        addShipping(shipping,bill,statuss)
+            if(loginUser === false) {setOpen2(true)}
+            else {
+                if (paymentLength === 0) {
+                    setOpen4(true)} else{
+                    if(addressLength === 0) {
+                            setOpen3(true)
+                    } else {
+                        if(productsLength === 0) {setOpen(true)}
+                        else {
+                            setOpen1(true)
+                            addShipping(shipping,bill,statuss)
+                        }
+                    }
+                }
+            }
     }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleClose1 = () => {
+        setOpen1(false);
+    };
+    const handleClose2 = () => {
+        setOpen2(false);
+    };
+    const handleClose3 = () => {
+        setOpen3(false);
+    };
+    const handleClose4 = () => {
+        setOpen4(false);
+    };
+
 
 
     console.log(db)
@@ -81,6 +130,82 @@ export function ShoppingCarBody() {
                 </BuyAll>
             </ShoppingBox>
 
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        PROFAVOR PARA REALIZAR UNA COMPRA TIENES QUE AGREGAR PRODUCTOS AL CARRITO
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={open1}
+                onClose={handleClose1}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        COMPRA REALIZADA CON EXITO
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose1}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={open2}
+                onClose={handleClose2}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        PORFAVOR INICIA SESION ANTES DE QUERER REALIZAR UNA COMPRA
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose2}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={open3}
+                onClose={handleClose3}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        PORFAVOR AGREGA UNA DIRECCION DE ENVIO ANTES DE REALIZAR UNA COMPRA
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose3}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog
+                open={open4}
+                onClose={handleClose4}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        PORFAVOR AGREGA UN METODO DE PAGO ANTES DE REALIZAR UNA COMPRA
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose4}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

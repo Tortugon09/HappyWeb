@@ -29,15 +29,15 @@ export function BodyHome() {
                 <div className="box-cake">
                     <div className="cake1 , boxs">
                         <img src={cake1}/>
-                        <h3>Cumpleaños <FaAngleDoubleRight/></h3>
+                        <Link to={"/HappyWeb/Pasteles"}><h3>Cumpleaños<FaAngleDoubleRight/></h3></Link>
                     </div>
                     <div className="cake2 , boxs">
                         <img src={cake2}/>
-                        <h3>Personalizados <FaAngleDoubleRight/></h3>
+                        <Link to={"/HappyWeb/Pasteles"}><h3>Personalizados <FaAngleDoubleRight/></h3></Link>
                     </div>
                     <div className="cake3 , boxs">
                         <img src={cake3}/>
-                        <h3>Dias Festivos <FaAngleDoubleRight/></h3>
+                        <Link to={"/HappyWeb/Pasteles"}> <h3>Dias Festivos <FaAngleDoubleRight/></h3></Link>
                     </div>
                 </div>
             </HomeCakeContainer>

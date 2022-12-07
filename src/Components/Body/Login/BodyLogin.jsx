@@ -5,11 +5,12 @@ import {useContext, useImperativeHandle, useState} from "react";
 import {Link, Navigate, useHref, useNavigate} from "react-router-dom";
 import {CartContext} from "../../../Context/CartContext.jsx";
 import axios from "axios";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText} from "@mui/material";
 
 export function BodyLogin() {
     let label1 = "Username";
     let label2 = "Passoword";
-    const {login,getAddress,getPayment,token, setUserR,userR} = useContext(CartContext);
+    const {login,getAddress,getPayment,token, setUserR,userR,setOpen,open} = useContext(CartContext);
     const [user, setuser] = useState({
         email: "",
         lastName: "",
@@ -22,6 +23,9 @@ export function BodyLogin() {
         setuser({...user,[e.target.name]: e.target.value})
         console.log(user)
     }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     console.log(token)
     const loginDates = async () => {
@@ -71,6 +75,22 @@ export function BodyLogin() {
                     </div>
                 </FormContainer>
             </FormBox>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        TU EMAIL O CONTRASEÑA SON INCORRECTOS PORFAVOR VERIFICA TUS CREDENCIALES
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Ok Entiendo</Button>
+                </DialogActions>
+            </Dialog>
 
         </>
     )

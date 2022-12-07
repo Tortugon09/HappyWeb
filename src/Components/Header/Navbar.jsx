@@ -29,13 +29,13 @@ export function Navbar() {
                         <img src={IconNav}/>
                         <div className="menu">
                             <div className="mobile-menu">
-                                <li><Link to={"/HappyWeb/HappyWeb"}><FaHome></FaHome></Link></li>
+                                <li><Link to={"/HappyWeb/"}><FaHome></FaHome></Link></li>
                                 <li><Link to={"/HappyWeb/Pasteles"}><FaBirthdayCake></FaBirthdayCake></Link></li>
                                 <li><Link to={"/HappyWeb/ShoppingCar"}><p>{productsLength}</p><FaShoppingCart/></Link></li>
                                 <li>{!loginUser ? <Link to={"/HappyWeb/LogIn"}><FaUserAlt></FaUserAlt></Link> : <Link to={"/HappyWeb/UserDates"}><FaUserCog></FaUserCog></Link> }</li>
                             </div>
                             <div className="menu-desktop">
-                                <li><Link to={"/HappyWeb/HappyWeb"}>Home</Link></li>
+                                <li><Link to={"/HappyWeb/"}>Home</Link></li>
                                 <li><Link to={"/HappyWeb/Pasteles"}>Pasteles</Link></li>
                             </div>
                         </div>

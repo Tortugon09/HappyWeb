@@ -15,7 +15,7 @@ export function AddCar(data) {
             <AddBox>
                 <div className="cake-data">
                     <div className="img-add">
-                        <img src={Img}/>
+                        <img src={data.data.cakePicture}/>
                     </div>
                     <div className="dates-add">
                         <h3 className="name">{data.data.name}</h3>

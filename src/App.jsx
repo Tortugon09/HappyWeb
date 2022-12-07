@@ -19,7 +19,7 @@ function App() {
                     <Provider store={store}>
                         <CartProvider>
                     <Routes>
-                        <Route path={"/HappyWeb/HappyWeb"} element={<Home></Home>}></Route>
+                        <Route path={"/HappyWeb/"} element={<Home></Home>}></Route>
                         <Route path={"/HappyWeb/LogIn"} element={<FormLogIn></FormLogIn>}></Route>
                         <Route path={"/HappyWeb/Register"} element={<FormRegister></FormRegister>}></Route>
                         <Route path={"/HappyWeb/Pasteles"} element={<Cakes></Cakes>}></Route>

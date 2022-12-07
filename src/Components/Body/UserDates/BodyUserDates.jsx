@@ -11,7 +11,7 @@ import {PaymentDates} from "./PaymentDates";
 
 export function BodyUserDates() {
     //USE OF THE CONTEXT
-    const {setLoginUser,editUser, userR, setUserR, addAddress, address,payment,addPayment,setToken} = useContext(CartContext)
+    const {setLoginUser,editUser, userR, setUserR, addAddress, address ,payment,addPayment,setToken} = useContext(CartContext)
 
     //DESTRUCTURATION OF THE USER
     const {id ,name, lastName, phone, email} = userR[0]
@@ -26,6 +26,7 @@ export function BodyUserDates() {
         phone: 0,
         email:"",
     });
+
     //STATES FOR THE ADDRESS
     const [addressLength, setAddressLength] = useState(0)
     useEffect(() => {
@@ -60,6 +61,7 @@ export function BodyUserDates() {
         })
     const [modal3, setmodal3] = useState(false)
     console.log(payment)
+    console.log(address)
 
 
 

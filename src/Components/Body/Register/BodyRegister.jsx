@@ -42,7 +42,7 @@ export function BodyRegister() {
                             <input className="input" onChange={handleChange} name="email" type="email" id="email" htmlFor="email" required></input>
                             <label htmlFor="password">Contraseña</label>
                             <input className="input" onChange={handleChange} name="password" type="password" id="password" htmlFor="password" required></input>
-                            <label htmlFor="phone">Numero de Telefono</label>
+                            <label htmlFor="phone">Numero de Telefono (10 DIGITOS REQUERIDOS)</label>
                             <input className="input" onChange={handleChange} name="phone" type="number" id="phone" htmlFor="phone" required></input>
                             <input className="submit" type="submit" value="Register" id="btn-form-register" required/>
                             <div><Link to={"/HappyWeb/LogIn"}>¿Ya tienes una cuenta? Entra Aqui</Link></div>
