@@ -48,7 +48,7 @@ export function Navbar() {
                             </div>
                         </div>
                         <Link to={"/HappyWeb/ShoppingCar"}><FaShoppingCart/><p>{productsLength}</p></Link>
-                        <h3>{!loginUser ? <Link to={"/HappyWeb/LogIn"}>Login</Link> : <Link to={"/HappyWeb/UserDates"}>{userR.userInDb.name}</Link> }</h3>
+                        <h3>{!loginUser ? <Link to={"/HappyWeb/LogIn"}>Login</Link> : <Link to={"/HappyWeb/UserDates"}>{userR[0].name}</Link> }</h3>
 
                     </div>
                 </div>

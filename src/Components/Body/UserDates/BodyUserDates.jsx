@@ -11,13 +11,13 @@ import {PaymentDates} from "./PaymentDates";
 
 export function BodyUserDates() {
     //USE OF THE CONTEXT
-    const {setLoginUser,editUser, userR, setUserR, addAddress, address,payment,addPayment} = useContext(CartContext)
+    const {setLoginUser,editUser, userR, setUserR, addAddress, address,payment,addPayment,setToken} = useContext(CartContext)
 
     //DESTRUCTURATION OF THE USER
-    const {id ,name, lastName, phone, email} = userR.userInDb
+    const {id ,name, lastName, phone, email} = userR[0]
     //STATES FOR THE USER
     const [modal1, setmodal1] = useState(false)
-    console.log(userR.userInDb)
+    console.log(userR)
     const [updateUser, setUpdateUser] = useState({
         id: id ,
         name: name,
@@ -99,7 +99,8 @@ export function BodyUserDates() {
                     <h2>Perfil</h2>
                     <Link to={"/HappyWeb/HappyWeb"}><button onClick={() => {
                         setUserR([])
-                        setLoginUser(false)}}>Cerrar Sesion</button></Link>
+                        setLoginUser(false)
+                        setToken("")}}>Cerrar Sesion</button></Link>
                 </div>
                 <div className="dates">
                     <div className="title-date">

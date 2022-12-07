@@ -10,6 +10,8 @@ export const CartContext = createContext();
 
 
     export const CartProvider = ({ children }) => {
+
+
         const navigate = useNavigate();
 
 
@@ -18,19 +20,29 @@ export const CartContext = createContext();
             billId: 0 ,
             statusOrderId: 0
         })
+        const [token, setToken] = useState(() => {
+            try {
+                const ProductsInLocalStorage = localStorage.getItem('token')
+                return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : ""
+            } catch (error) {
+                return "";
+            }
+        })
+
     //STATES FOR THE PRODUCTS
     const [products, setProducts] = useState([]);
     //STATES FOR THE USERS
 
         //STATE FOR ALL USERS
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState(
+    )
         //STATE FOR THE USER IN SESION
     const [userR, setUserR] = useState(() => {
         try {
             const ProductsInLocalStorage = localStorage.getItem('LoginUserR')
-            return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : []
+            return ProductsInLocalStorage ? JSON.parse(ProductsInLocalStorage) : {}
         } catch (error) {
-            return [];
+            return {};
         }
     })
         //STATE IF THE USER LOGIN IS TRUE?
@@ -46,8 +58,11 @@ export const CartContext = createContext();
     const [address, setAddress] = useState([{}])
     //STATES FOR THE PAYMENTS
     const [payment,setPayment] = useState([{}])
-    console.log(payment)
-    console.log(address)
+        console.log(token)
+
+        const instance = axios.create();
+        instance.defaults.headers.common['Authorization'] = token;
+        axios.defaults.headers.common['Authorization'] = token;
 
 
     //EJECUTE FOR THE REQUESTS
@@ -59,29 +74,24 @@ export const CartContext = createContext();
     useEffect(() =>{
         localStorage.setItem("LoginUserR", JSON.stringify(userR))
     }, [userR]);
+        useEffect(() =>{
+            localStorage.setItem("token", JSON.stringify(token))
+        }, [token]);
 
     useEffect(() => {
         getProducts();
     }, []);
 
-    useEffect(() => {
-        getUser();
-    }, []);
 
-    useEffect(() => {
-        getAddress()
-    }, []);
-
-    useEffect(() => {
-        getPayment();
-    }, [])
 
         const getPayment = async () => {
-            await axios.get(`http://localhost:8080/payment/client/${userR.userInDb.id}`)
+            const {id} = userR[0]
+            await axios.get(`http://localhost:8080/payment/client/${id}`)
                 .then(({ data }) => setPayment(data.data));
         }
         const getAddress = async () => {
-            await axios.get(`http://localhost:8080/address/client/${userR.userInDb.id}`)
+            const {id} = userR[0]
+            await axios.get(`http://localhost:8080/address/client/${id}`)
                 .then(({ data }) => setAddress(data.data));
         }
 
@@ -90,7 +100,7 @@ export const CartContext = createContext();
         // REQUEST FOR THE PRODUCTS
         const getProducts = async () => {
             await axios
-                .get("http://localhost:8080/product")
+                .get("http://localhost:8080/product/list")
                 .then(({ data }) => setProducts(data.data));
 
 
@@ -110,13 +120,6 @@ export const CartContext = createContext();
 
         getProducts();
     };
-    const getproductId = async (product) => {
-        const { id } = product;
-        await axios
-            .get(`http://localhost:8080/product/${id}`)
-
-        getProducts();
-    };
     const delateProduct = async (product) => {
         const { id } = product;
         await axios
@@ -126,39 +129,47 @@ export const CartContext = createContext();
     };
 
     // REQUEST FOR THE USERS
-    const login = (user) => {
-        const userInDb = users.find(
-            (userInDB) => userInDB.email === user.email
-        );
-        if (userInDb) {
-            setUserR( () => {
-                if (userInDb.name === user.password) {
-                    navigate("/HappyWeb/HappyWeb")
-                    setLoginUser(true)
-                    return {userInDb}
-                }
-                else {
-                    setLoginUser(false)
-                    return {};
-                }
-
-            })
+        const login = async (user) => {
+            const {email, password} = user
+            await axios
+                .post("http://localhost:8080/login", {email,password})
+                .then( async(response) => {
+                    setToken(response.headers['authorization'])
+                    await axios({
+                        method: 'get',
+                        url: `http://localhost:8080/client/findByEmail?email=${email}`,
+                        headers: {'Authorization': `${response.headers['authorization']}`}
+                    }).then(function (response) {
+                        console.log(response.data.data)
+                        setUserR(response.data.data);
+                        setLoginUser(true)
+                        navigate("/HappyWeb/HappyWeb")
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                })
         }
 
-        else setLoginUser(false)
+        const getUser = async () => {
+            await axios({
+                method: 'get',
+                url: `http://localhost:8080/client/findByEmail?email=${userR[0].email}`,
+            }).then(function (response) {
+                console.log(response.data.data)
+                setUserR(response.data.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
-    }
-    const getUser = async () => {
-        await axios
-            .get("http://localhost:8080/client")
-            .then(({ data }) => setUsers(data.data));
-    };
+
     const createUserPost= async(user) => {
             const { email, lastName, name, password,phone } = user;
-            await axios.post("http://localhost:8080/client", { email ,lastName , name, password , phone });
+            await axios.post("http://localhost:8080/client/register", { email ,lastName , name, password , phone });
             getUser();
             navigate("/HappyWeb/LogIn")
         }
+
     const editUser = async (user) => {
         const {id, email, lastName, name, password,phone } = user;
         console.log(lastName)
@@ -173,34 +184,60 @@ export const CartContext = createContext();
     const addAddress = async(address) => {
         const {state, city, street, houseNumber, zipCode, clientId} = address;
         await axios.post("http://localhost:8080/address", {state, city, street, houseNumber, zipCode, clientId})
-        getAddress();
+            .then(function (response) {
+                getAddress()
+            }).catch(function (error) {
+                console.log(error);
+            })
 
     }
     const putAddress = async (address) => {
         const {id, state, city, street, houseNumber, zipCode, clientId} = address
         await axios.put(`http://localhost:8080/address/${id}`, {state, city, street, houseNumber, zipCode, clientId})
-        getAddress();
+            .then(function (response) {
+                getAddress();
+            }).catch(function (error) {
+                console.log(error);
+            })
     }
     const delateAddress = async(id) => {
         await axios.delete(`http://localhost:8080/address/${id}`)
-        getAddress();
+            .then(function (response) {
+                getAddress()
+            }).catch(function (error) {
+                console.log(error);
+            })
+
     }
 
     //REQUEST FOR THE PAYMENTS
         const addPayment = async(payment) => {
             const {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment;
             await axios.post("http://localhost:8080/payment", {cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
-            getPayment();
+                .then(function (response) {
+                    getPayment();
+                }).catch(function (error) {
+                    console.log(error);
+                })
 
         }
         const putPayment = async (payment) => {
             const {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId} = payment
             await axios.put(`http://localhost:8080/payment/${id}`, {id,cardNumber,dateExpiry,cardHolder,cardIssuer,cvv,clientId})
-            getPayment();
+                .then(function (response) {
+                    getPayment();
+                }).catch(function (error) {
+                    console.log(error);
+                })
         }
+
         const delatePayment = async(id) => {
             await axios.delete(`http://localhost:8080/payment/${id}`)
-            getPayment();
+                .then(function (response) {
+                    getPayment();
+                }).catch(function (error) {
+                    console.log(error);
+                })
         }
 
 
@@ -282,6 +319,8 @@ export const CartContext = createContext();
         }
 
 
+
+
     return (
         <CartContext.Provider
             value={{
@@ -305,7 +344,10 @@ export const CartContext = createContext();
                 putPayment,
                 delatePayment,
                 addShipping,
-                users
+                users,
+                token,
+                setToken
+
         }}>
             {children}
         </CartContext.Provider>

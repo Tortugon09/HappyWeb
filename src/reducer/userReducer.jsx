@@ -8,7 +8,6 @@ const initialState = {
 
 export default function userReducer(state=initialState, action) {
     const user= action.payload
-    console.log(user)
     switch (action.type) {
         case CREATE_USER:
             return {

@@ -15,8 +15,6 @@ const initialState = {
     db: d()
 };
 
-console.log(initialState)
-
 export default function  cartReducer(state=initialState, action){
     const product = action.payload;
     switch (action.type) {

@@ -4,11 +4,12 @@ import {InputBox1} from "./InputBox1";
 import {useContext, useImperativeHandle, useState} from "react";
 import {Link, Navigate, useHref, useNavigate} from "react-router-dom";
 import {CartContext} from "../../../Context/CartContext.jsx";
+import axios from "axios";
 
 export function BodyLogin() {
     let label1 = "Username";
     let label2 = "Passoword";
-    const {login,getAddress,getPayment} = useContext(CartContext);
+    const {login,getAddress,getPayment,token, setUserR,userR} = useContext(CartContext);
     const [user, setuser] = useState({
         email: "",
         lastName: "",
@@ -21,10 +22,33 @@ export function BodyLogin() {
         setuser({...user,[e.target.name]: e.target.value})
         console.log(user)
     }
+
+    console.log(token)
+    const loginDates = async () => {
+        const {email} = user
+        await axios({
+            method: 'get',
+            url: `http://localhost:8080/client/findByEmail?email=${email}`,
+            headers: {'Authorization': `${token}`}
+        }).then(function (response) {
+                console.log(response.data)
+                setUserR(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            })
+
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
         login(user);
-        location.reload(true)
+        if (token === "")  {
+            console.log("error")
+        } else {
+            console.log(userR)
+            loginDates(user)
+
+        }
     }
 
     return (
